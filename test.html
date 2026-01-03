@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Tỉnh Thành Việt Nam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Chọn Địa Điểm</h2>
+        <div class="form-group">
+            <label for="city">Tỉnh / Thành phố:</label>
+            <select id="city">
+                <option value="" selected>-- Chọn Tỉnh/Thành phố --</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="district">Quận / Huyện:</label>
+            <select id="district">
+                <option value="" selected>-- Chọn Quận/Huyện --</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ward">Phường / Xã:</label>
+            <select id="ward">
+                <option value="" selected>-- Chọn Phường/Xã --</option>
+            </select>
+        </div>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        window.onerror = function (message, source, lineno, colno, error) {
+            if (source.includes('data.js')) {
+                alert("PHÁT HIỆN LỖI TRONG FILE data.js:\n" + message + "\n\n(Bạn hãy kiểm tra lại file data.js xem có thừa/thiếu dấu ngoặc nào không)");
+            }
+        };
+    </script>
+
+    <script src="data.js"></script>
+
+    <script>
+        const citySelect = document.getElementById('city');
+        const districtSelect = document.getElementById('district');
+        const wardSelect = document.getElementById('ward');
+        const resultDiv = document.getElementById('result');
+
+        // Kiểm tra dữ liệu
+        try {
+            if (typeof data === 'undefined' || !Array.isArray(data)) {
+                // Nếu code chạy đến đây nghĩa là file data.js chưa được load đúng cách
+                alert('Vẫn chưa đọc được dữ liệu!\n\n1. Kiểm tra file "data.js" đã nằm cùng thư mục với file html chưa?\n2. Mở file "data.js" và chắc chắn dòng đầu tiên là: var data = [');
+            } else {
+                // Nếu ok thì render
+                renderCities(data);
+            }
+        } catch (e) {
+            alert('Lỗi hệ thống: ' + e.message);
+        }
+
+        function renderCities(data) {
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.name;
+                option.textContent = item.name;
+                citySelect.appendChild(option);
+            });
+        }
+
+        citySelect.addEventListener('change', function () {
+            districtSelect.innerHTML = '<option value="">-- Chọn Quận/Huyện --</option>';
+            wardSelect.innerHTML = '<option value="">-- Chọn Phường/Xã --</option>';
+            resultDiv.style.display = 'none';
+
+            const selectedCity = data.find(c => c.name === this.value);
+            if (selectedCity && selectedCity.districts) {
+                selectedCity.districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.name;
+                    option.textContent = district.name;
+                    districtSelect.appendChild(option);
+                });
+            }
+        });
+
+        districtSelect.addEventListener('change', function () {
+            wardSelect.innerHTML = '<option value="">-- Chọn Phường/Xã --</option>';
+            resultDiv.style.display = 'none';
+
+            const selectedCity = data.find(c => c.name === citySelect.value);
+            const selectedDistrict = selectedCity.districts.find(d => d.name === this.value);
+            if (selectedDistrict && selectedDistrict.wards) {
+                selectedDistrict.wards.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward.name;
+                    option.textContent = ward.name;
+                    wardSelect.appendChild(option);
+                });
+            }
+        });
+
+        wardSelect.addEventListener('change', function () {
+            if (citySelect.value && districtSelect.value && this.value) {
+                resultDiv.innerHTML = `Đã chọn: <strong>${this.value}, ${districtSelect.value}, ${citySelect.value}</strong>`;
+                resultDiv.style.display = 'block';
+            }
+        });
+    </script>
+
+</body>
+
+</html>
