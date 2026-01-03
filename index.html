@@ -12,22 +12,18 @@
             --primary: #3b82f6;
             --primary-hover: #2563eb;
             --secondary: #64748b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
             --bg-body: #f1f5f9;
             --bg-surface: #ffffff;
             --border: #e2e8f0;
             --text-main: #1e293b;
             --text-light: #64748b;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --radius: 8px;
-            --header-h: 60px;
         }
 
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
+            outline: none;
         }
 
         body {
@@ -39,7 +35,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* --- HEADER --- */
@@ -49,193 +45,297 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 16px;
-            box-shadow: var(--shadow-sm);
+            padding: 8px 12px;
             flex-shrink: 0;
             z-index: 50;
-            gap: 10px;
         }
 
         .brand-section {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
+            gap: 8px;
         }
 
         .app-logo {
-            font-size: 20px;
+            font-size: 16px;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
         }
 
-        .app-subtitle {
-            font-size: 11px;
-            background: #eff6ff;
-            color: var(--primary);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
         .header-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             align-items: center;
-            flex-wrap: nowrap;
         }
 
-        /* --- CONTROL BAR --- */
+        /* --- CONTROL BAR (Row 1) --- */
         .control-bar {
             background: var(--bg-surface);
-            padding: 10px 16px;
+            padding: 8px 12px;
             border-bottom: 1px solid var(--border);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8fafc;
-            padding: 4px;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-        }
-
-        /* File Input */
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
-
-        .file-input-wrapper input[type=file] {
-            font-size: 100px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-        }
-
-        .btn-file-trigger {
-            background: white;
-            color: var(--text-main);
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 13px;
-            border: 1px solid var(--border);
             display: flex;
             align-items: center;
             gap: 6px;
-            width: 100%;
-            justify-content: center;
-        }
-
-        /* Routing Area */
-        .routing-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #fff7ed;
-            border: 1px solid #fed7aa;
-            padding: 6px 12px;
-            border-radius: var(--radius);
-            min-width: 200px;
-        }
-
-        .routing-input {
-            border: none;
-            background: transparent;
-            width: 100%;
-            outline: none;
-            color: #c2410c;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .routing-input::placeholder {
-            color: #fdba74;
-            font-weight: 400;
-        }
-
-        /* Filter Bar */
-        .filter-bar {
-            background: var(--bg-surface);
-            padding: 8px 16px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            gap: 10px;
-            align-items: center;
+            /* Khoảng cách giữa các phần tử */
             flex-shrink: 0;
-            overflow-x: auto;
-            /* Allow scroll horizontally */
+            z-index: 40;
+            height: 50px;
         }
 
-        .search-box {
-            position: relative;
-            flex: 1;
-            max-width: 300px;
-            min-width: 150px;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 8px 12px 8px 32px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
+        /* 1. File Button (Compact icon only on very small screens) */
+        .file-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 32px;
             background: #f8fafc;
-            font-size: 13px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-size: 16px;
         }
 
-        .search-icon {
+        /* 2. Header Row Input */
+        .header-row-input {
+            width: 28px;
+            height: 32px;
+            text-align: center;
+            padding: 0;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        /* 3. Sheet Selector (New) */
+        .sheet-wrapper {
+            flex: 1;
+            /* Chia sẻ không gian */
+            min-width: 0;
+            /* Cho phép thu nhỏ */
+            position: relative;
+            background: #f0fdf4;
+            /* Màu xanh lá nhạt */
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sheet-select {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 11px;
+            font-weight: 600;
+            color: #15803d;
+            padding: 0 4px;
+            appearance: none;
+            /* Ẩn mũi tên mặc định */
+        }
+
+        /* Icon Sheet overlay */
+        .sheet-icon-overlay {
             position: absolute;
-            left: 10px;
+            right: 4px;
             top: 50%;
             transform: translateY(-50%);
-            color: #94a3b8;
+            font-size: 8px;
+            color: #15803d;
+            pointer-events: none;
         }
 
-        #dynamicFiltersContainer {
+        /* 4. Address Column Selector */
+        .addr-dropdown-wrapper {
+            flex: 1;
+            /* Chia sẻ không gian với Sheet */
+            min-width: 0;
+            position: relative;
+        }
+
+        .addr-dropdown-btn {
+            height: 32px;
+            padding: 0 6px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .addr-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 11px;
+            color: #1d4ed8;
+            font-weight: 500;
+        }
+
+        .addr-dropdown-content {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 101;
+            max-height: 250px;
+            overflow-y: auto;
+            width: 220px;
+            padding: 5px;
+            border-radius: 8px;
+            display: none;
+            margin-top: 4px;
+        }
+
+        .addr-dropdown-content.show {
+            display: block;
+        }
+
+        /* 5. Apply Button */
+        .btn-apply {
+            height: 32px;
+            padding: 0 10px;
+            flex-shrink: 0;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        /* --- COMBINED SEARCH BAR (Row 2) --- */
+        .combined-search-bar {
+            background: var(--bg-surface);
+            padding: 6px 12px;
+            border-bottom: 1px solid var(--border);
             display: flex;
             gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 2px;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+            align-items: center;
+            flex-shrink: 0;
         }
 
-        #dynamicFiltersContainer::-webkit-scrollbar {
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border-radius: 20px;
+            transition: all 0.2s;
+            height: 34px;
+        }
+
+        .search-wrapper {
+            flex: 1;
+            background: #f1f5f9;
+            border: 1px solid var(--border);
+        }
+
+        .address-wrapper {
+            flex: 1.5;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 8px;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .custom-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            padding: 6px 6px 6px 26px;
+            font-size: 12px;
+            border-radius: 20px;
+            color: var(--text-main);
+            height: 100%;
+        }
+
+        .address-wrapper .custom-input {
+            color: #c2410c;
+            font-weight: 500;
+        }
+
+        .address-wrapper .custom-input::placeholder {
+            color: #fdba74;
+        }
+
+        .clear-btn {
+            padding: 0 8px;
+            color: #94a3b8;
+            font-size: 14px;
+            background: none;
+            border: none;
+            cursor: pointer;
             display: none;
         }
 
-        /* --- TABLE --- */
+        .input-wrapper:focus-within .clear-btn {
+            display: block;
+        }
+
+        /* --- TAGS FILTER BAR (Row 3) --- */
+        .tags-bar {
+            background: var(--bg-surface);
+            padding: 6px 12px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            flex-shrink: 0;
+            min-height: 40px;
+            align-items: center;
+        }
+
+        .tags-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-select-wrapper {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2px 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* --- TABLE AREA --- */
         .main-content {
             flex: 1;
             overflow: hidden;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
+            position: relative;
+            background: #f1f5f9;
         }
 
         .table-card {
-            background: white;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            flex: 1;
+            height: 100%;
             overflow: auto;
-            position: relative;
+            background: white;
         }
 
         table {
@@ -249,8 +349,8 @@
             background: #f8fafc;
             color: var(--text-light);
             font-weight: 600;
-            font-size: 12px;
-            padding: 10px 8px;
+            font-size: 11px;
+            padding: 8px 6px;
             border-bottom: 1px solid var(--border);
             border-right: 1px solid var(--border);
             position: sticky;
@@ -261,7 +361,7 @@
         }
 
         td {
-            padding: 8px;
+            padding: 6px 8px;
             border-bottom: 1px solid var(--border);
             border-right: 1px solid #f1f5f9;
             font-size: 13px;
@@ -269,40 +369,31 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 44px;
-        }
-
-        tr:hover td {
-            background: #f8fafc;
+            height: 40px;
         }
 
         td.expanded-cell {
             white-space: pre-wrap !important;
             height: auto !important;
             background: #eff6ff !important;
-            position: relative;
-            z-index: 5;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* --- BUTTONS --- */
+        /* --- UTILS --- */
+        .hidden {
+            display: none !important;
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 8px 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 11px;
             border: none;
             cursor: pointer;
             white-space: nowrap;
-        }
-
-        .btn-sm {
-            padding: 4px 8px;
-            font-size: 12px;
         }
 
         .btn-primary {
@@ -321,53 +412,44 @@
             color: #dc2626;
         }
 
-        /* Custom Select & Inputs */
-        .addr-dropdown-btn {
-            padding: 6px 10px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 5px;
-        }
-
-        .addr-dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            max-height: 250px;
-            overflow-y: auto;
-            width: 250px;
-            padding: 5px;
-            border-radius: 8px;
-            display: none;
-            margin-top: 4px;
-        }
-
-        .addr-dropdown-content.show {
-            display: block;
+        .batch-btn {
+            background: #ea580c;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 10px;
+            padding: 2px 8px;
+            margin-right: 2px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .link-badge {
             display: inline-block;
-            padding: 4px 8px;
+            padding: 3px 6px;
             border-radius: 4px;
             font-weight: 600;
-            font-size: 11px;
+            font-size: 10px;
             text-decoration: none;
             text-align: center;
             width: 100%;
         }
 
-        /* Modal & Helpers */
+        .col-resizer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 100%;
+            cursor: col-resize;
+        }
+
+        .col-remove-btn {
+            color: #ef4444;
+            cursor: pointer;
+            margin-right: 4px;
+        }
+
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -388,128 +470,21 @@
         .modal-content {
             background: white;
             width: 95%;
-            max-width: 600px;
-            max-height: 90vh;
+            max-width: 500px;
+            max-height: 85vh;
             border-radius: 12px;
             display: flex;
             flex-direction: column;
         }
 
-        .hidden {
-            display: none !important;
-        }
-
-        .col-resizer {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 5px;
-            height: 100%;
-            cursor: col-resize;
-        }
-
-        .col-remove-btn {
-            color: #ef4444;
-            cursor: pointer;
-            margin-right: 4px;
-            font-size: 14px;
-        }
-
         .tag {
             background: #f1f5f9;
-            padding: 2px 8px;
+            padding: 2px 6px;
             border-radius: 10px;
-            font-size: 11px;
+            font-size: 10px;
             margin: 2px;
             border: 1px solid var(--border);
             display: inline-block;
-        }
-
-        /* --- RESPONSIVE MOBILE OPTIMIZATIONS --- */
-        @media (max-width: 768px) {
-
-            /* 1. Header Layout Fix: Stack logo and buttons vertically */
-            .app-header {
-                flex-direction: column;
-                align-items: stretch;
-                height: auto;
-                padding: 12px;
-                gap: 12px;
-            }
-
-            .brand-section {
-                justify-content: center;
-                width: 100%;
-            }
-
-            /* Enable horizontal scroll for buttons if they are too wide, OR wrap them */
-            .header-actions {
-                width: 100%;
-                display: flex;
-                overflow-x: auto;
-                /* Scroll horizontally if needed */
-                justify-content: space-between;
-                /* Spread buttons out */
-                padding-bottom: 2px;
-                /* Space for scrollbar */
-            }
-
-            /* Text on buttons hidden on extremely small screens if needed, 
-               but current design tries to keep them visible by scrolling */
-
-            /* 2. Control Bar Stacking */
-            .control-bar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 10px 12px;
-            }
-
-            .control-group {
-                width: 100%;
-                justify-content: space-between;
-                flex-wrap: wrap;
-            }
-
-            /* Make inputs full width or flex */
-            .file-input-wrapper {
-                flex: 1;
-            }
-
-            #configControls {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            /* Address dropdown takes more space */
-            .addr-dropdown-btn {
-                flex: 1;
-                min-width: 120px;
-            }
-
-            /* Header row input smaller */
-            #headerRow {
-                width: 40px !important;
-            }
-
-            /* 3. Routing Area */
-            .routing-wrapper {
-                width: 100%;
-                margin-top: 5px;
-            }
-
-            /* 4. Filter Bar */
-            .filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-box {
-                max-width: 100%;
-                margin-bottom: 8px;
-            }
-
-            /* Hide badge count in header, show in footer if needed (optional) */
-            /* #rowCountBadge { display: none; } */
         }
     </style>
 </head>
@@ -518,82 +493,73 @@
 
     <header class="app-header">
         <div class="brand-section">
-            <div class="app-logo">VKAM</div>
-            <div style="display:flex; flex-direction:column; line-height:1.1;">
-                <span style="font-weight:700; font-size:14px;">Multiple Maps</span>
-                <span class="app-subtitle">ABBOOT SYSTEM</span>
-            </div>
-            <span id="rowCountBadge" class="badge-count"
-                style="background:#1e293b; color:white; padding:2px 8px; border-radius:10px; font-size:10px;">...</span>
+            <div class="app-logo">VKAM Maps</div>
+            <span id="rowCountBadge"
+                style="background:#1e293b;color:white;padding:2px 6px;border-radius:8px;font-size:10px;margin-left:4px;">0</span>
             <span id="saveStatus"
-                style="font-size: 12px; color: var(--success); opacity: 0; transition: opacity 0.5s;">✓ Đã lưu</span>
+                style="font-size:10px;color:#10b981;opacity:0;transition:opacity 0.5s;margin-left:4px;">✓</span>
+            <span class="file-name-display"
+                style="font-size:10px;color:#64748b;margin-left:8px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
         </div>
-
         <div class="header-actions">
-            <button class="btn btn-danger btn-sm" onclick="resetAllData()" title="Xóa dữ liệu">🗑️ Xóa</button>
+            <button class="btn btn-danger" onclick="resetAllData()" title="Xóa">🗑️</button>
+            <button class="btn btn-outline" onclick="triggerImport()">📥</button>
+            <button class="btn btn-outline" onclick="exportFilterConfig()">📤</button>
+            <button class="btn btn-primary" onclick="openFilterManager()">⚙️</button>
+            <button class="btn btn-outline" id="btnRestoreCols" onclick="resetHiddenColumns()"
+                style="display:none; color:var(--primary); border-color:var(--primary);">Hiện lại cột</button>
             <input type="file" id="importConfigInput" accept=".xlsx, .xls" class="hidden">
-
-            <button class="btn btn-outline btn-sm" id="btnRestoreCols" onclick="resetHiddenColumns()"
-                style="display:none; color: var(--primary); border-color: var(--primary);">
-                👁️ Hiện lại cột
-            </button>
-
-            <button class="btn btn-outline btn-sm" onclick="triggerImport()" title="Import">📥 Import</button>
-            <button class="btn btn-outline btn-sm" onclick="exportFilterConfig()" title="Export">📤 Export</button>
-            <button class="btn btn-primary btn-sm" onclick="openFilterManager()" title="Cài đặt">⚙️ Cài đặt</button>
         </div>
     </header>
 
     <div class="control-bar">
-        <div class="control-group" style="background:transparent; border:none; padding:0; flex-wrap:wrap; gap:8px;">
-            <div class="file-input-wrapper" style="flex:1;">
-                <button class="btn-file-trigger">📂 <span class="file-name-display">Chọn file Excel...</span></button>
-                <input type="file" id="excelFile" accept=".xlsx, .xls" onchange="handleFileSelect(this)">
-            </div>
+        <input type="file" id="excelFile" accept=".xlsx, .xls" class="hidden" onchange="handleFileSelect(this)">
+        <div class="file-trigger" onclick="document.getElementById('excelFile').click()" title="Chọn file">
+            <span>📁</span>
         </div>
 
-        <div id="configControls" class="control-group hidden" style="flex:1; justify-content:space-between;">
-            <div style="display:flex; align-items:center; gap:5px;">
-                <label style="font-size:12px; color:var(--text-light); white-space:nowrap;">Dòng tiêu đề:</label>
-                <input type="number" id="headerRow" value="1" min="1"
-                    style="width: 45px; text-align:center; border:1px solid #cbd5e1; border-radius:4px; padding:4px;"
-                    onchange="saveAppState()">
-            </div>
+        <input type="number" id="headerRow" value="1" min="1" class="header-row-input" title="Dòng tiêu đề"
+            onchange="saveAppState()">
 
-            <div style="position:relative; flex:1; max-width: 200px;">
-                <div class="addr-dropdown-btn" onclick="toggleAddrDropdown()">
-                    <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📍 Chọn cột địa
-                        chỉ...</span>
-                    <small>▼</small>
+        <div class="sheet-wrapper" title="Chọn Sheet">
+            <select id="sheetSelector" class="sheet-select" onchange="handleSheetChange(this.value)">
+                <option value="">Sheet...</option>
+            </select>
+            <span class="sheet-icon-overlay">▼</span>
+        </div>
+
+        <div class="addr-dropdown-wrapper">
+            <div class="addr-dropdown-btn" onclick="toggleAddrDropdown()">
+                <div style="display:flex;align-items:center;gap:4px;overflow:hidden;width:100%;">
+                    <span>📍</span>
+                    <span class="addr-text" id="addrBtnText">Cột?</span>
                 </div>
-                <div id="addrDropdownContent" class="addr-dropdown-content"></div>
+                <small style="font-size:8px;">▼</small>
             </div>
-
-            <button class="btn btn-primary btn-sm" onclick="processInitialData(true)">Áp dụng</button>
+            <div id="addrDropdownContent" class="addr-dropdown-content"></div>
         </div>
 
-        <div id="routingArea" class="routing-wrapper hidden">
-            <span style="font-size:16px;">🏠</span>
-            <input type="text" class="routing-input" id="customerAddress" placeholder="Nhập địa chỉ nhà..."
-                onkeyup="updateMapLinks(); debouncedSave();">
-            <button onclick="clearCustomerAddress()"
-                style="border:none; background:none; color:var(--text-light); cursor:pointer;">✕</button>
-            <button id="btnOpenBatch" class="btn btn-primary btn-sm hidden" onclick="openVisibleLinksLimit()"
-                style="background: #ea580c; white-space:nowrap;">
-                Mở 10 Map
-            </button>
-        </div>
+        <button class="btn-apply" onclick="processInitialData(true)">Đi</button>
     </div>
 
-    <div id="filterBar" class="filter-bar hidden">
-        <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="globalSearch" placeholder="Tìm tên, SĐT..."
+    <div class="combined-search-bar hidden" id="searchRouteRow">
+        <div class="input-wrapper search-wrapper">
+            <span class="input-icon" style="color:#94a3b8;">🔍</span>
+            <input type="text" id="globalSearch" class="custom-input" placeholder="Tìm..."
                 onkeyup="applyFilters(); debouncedSave();">
+            <button class="clear-btn"
+                onclick="document.getElementById('globalSearch').value=''; applyFilters();">✕</button>
         </div>
-        <div id="dynamicFiltersContainer">
+        <div class="input-wrapper address-wrapper">
+            <span class="input-icon" style="color:#ea580c;">🏠</span>
+            <input type="text" id="customerAddress" class="custom-input" placeholder="Nhập địa chỉ..."
+                onkeyup="updateMapLinks(); debouncedSave();">
+            <button class="clear-btn" onclick="clearCustomerAddress()">✕</button>
+            <button id="btnOpenBatch" class="batch-btn hidden" onclick="openVisibleLinksLimit()">Mở 10</button>
         </div>
     </div>
+
+    <div id="dynamicFiltersContainer" class="tags-bar hidden"></div>
 
     <main class="main-content">
         <div class="table-card" id="tableWrapper">
@@ -601,11 +567,11 @@
                 <thead id="tableHead"></thead>
                 <tbody id="tableBody">
                     <tr>
-                        <td colspan="10" style="text-align:center; padding: 60px 20px;">
+                        <td colspan="10" style="text-align:center; padding: 40px 20px;">
                             <div
-                                style="color: var(--text-light); display:flex; flex-direction:column; align-items:center; gap:10px;">
-                                <div style="font-size: 40px; opacity:0.3;">📁</div>
-                                <div style="font-size:13px;">Chưa có dữ liệu</div>
+                                style="color:var(--text-light);display:flex;flex-direction:column;align-items:center;gap:8px;">
+                                <div style="font-size:32px;opacity:0.3;">📂</div>
+                                <div>Chưa có dữ liệu</div>
                             </div>
                         </td>
                     </tr>
@@ -617,15 +583,15 @@
     <div id="filterModal" class="modal-overlay">
         <div class="modal-content">
             <div
-                style="padding: 15px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border-radius:12px 12px 0 0;">
-                <h3 style="margin:0; font-size:16px;">⚙️ Quản Lý Bộ Lọc</h3>
+                style="padding:12px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border-radius:12px 12px 0 0;">
+                <h3 style="margin:0; font-size:15px;">⚙️ Quản Lý Bộ Lọc</h3>
                 <button onclick="closeFilterManager()"
-                    style="background:none; border:none; font-size:20px; cursor:pointer;">✕</button>
+                    style="background:none; border:none; font-size:18px; padding:4px;">✕</button>
             </div>
-            <div style="padding: 15px; overflow-y: auto; flex: 1; background:#f1f5f9;" id="filterGroupsContainer"></div>
+            <div style="padding:12px; overflow-y:auto; flex:1; background:#f1f5f9;" id="filterGroupsContainer"></div>
             <div
-                style="padding: 15px; border-top: 1px solid var(--border); display:flex; gap:10px; background:white; border-radius:0 0 12px 12px;">
-                <button class="btn btn-outline" style="flex:1;" onclick="addNewFilterGroupUI()">+ Thêm nhóm</button>
+                style="padding:12px; border-top:1px solid var(--border); display:flex; gap:8px; background:white; border-radius:0 0 12px 12px;">
+                <button class="btn btn-outline" style="flex:1;" onclick="addNewFilterGroupUI()">+ Thêm</button>
                 <button class="btn btn-primary" style="flex:1;" onclick="saveFiltersAndApply()">Lưu & Áp Dụng</button>
             </div>
         </div>
@@ -633,23 +599,25 @@
 
     <script>
         const BASE_URL_ROOT = "https://www.google.com/maps/dir/";
-        const STORAGE_KEY = 'toolFilterPro_v8_6_ABBOOT_VKAM_data';
+        const STORAGE_KEY = 'VKAM_SmartMaps_v4_Sheets';
 
+        let workbook = null; // Store workbook globally
+        let sheetNames = [];
         let rawData = [];
         let headers = [];
         let filterConfigs = [];
         let selectedAddrCols = [];
         let colWidths = {};
         let hiddenColumns = new Set();
+        let currentSheetName = ""; // Track active sheet
         let saveTimeout;
 
         const els = {
             headerRow: document.getElementById('headerRow'),
-            configControls: document.getElementById('configControls'),
-            routingArea: document.getElementById('routingArea'),
+            sheetSelector: document.getElementById('sheetSelector'),
             customerAddrInput: document.getElementById('customerAddress'),
             btnOpenBatch: document.getElementById('btnOpenBatch'),
-            filterBar: document.getElementById('filterBar'),
+            searchRouteRow: document.getElementById('searchRouteRow'),
             filterContainer: document.getElementById('dynamicFiltersContainer'),
             tableHead: document.getElementById('tableHead'),
             tableBody: document.getElementById('tableBody'),
@@ -657,34 +625,62 @@
             modalContainer: document.getElementById('filterGroupsContainer'),
             badge: document.getElementById('rowCountBadge'),
             addrDropdown: document.getElementById('addrDropdownContent'),
-            addrBtn: document.querySelector('.addr-dropdown-btn span'),
+            addrBtnText: document.getElementById('addrBtnText'),
             table: document.getElementById('dataTable'),
             saveStatus: document.getElementById('saveStatus'),
             globalSearch: document.getElementById('globalSearch'),
-            btnRestoreCols: document.getElementById('btnRestoreCols')
+            btnRestoreCols: document.getElementById('btnRestoreCols'),
+            fileNameDisplay: document.querySelector('.file-name-display')
         };
 
         window.onload = function () { loadAppState(); };
 
-        // --- FILE HANDLING ---
+        // --- FILE & SHEET HANDLING ---
         function handleFileSelect(input) {
             const file = input.files[0];
             if (!file) return;
-            document.querySelector('.file-name-display').innerText = file.name;
+            els.fileNameDisplay.innerText = file.name;
             const reader = new FileReader();
             reader.onload = function (e) {
                 const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                rawData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
-                colWidths = {};
-                hiddenColumns.clear();
-                if (rawData.length > 0) {
-                    els.configControls.classList.remove('hidden');
-                    updateColumnCheckboxes();
-                    saveAppState();
-                }
+                workbook = XLSX.read(data, { type: 'array' });
+                sheetNames = workbook.SheetNames;
+
+                // Populate Sheet Dropdown
+                renderSheetOptions();
+
+                // Select first sheet by default
+                handleSheetChange(sheetNames[0]);
             };
             reader.readAsArrayBuffer(file);
+        }
+
+        function renderSheetOptions() {
+            els.sheetSelector.innerHTML = sheetNames.map(name =>
+                `<option value="${name}">${name}</option>`
+            ).join('');
+        }
+
+        function handleSheetChange(sheetName) {
+            if (!workbook) return; // Should not happen if flow is correct
+            currentSheetName = sheetName;
+            els.sheetSelector.value = sheetName;
+
+            // Read data from new sheet
+            rawData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
+
+            // Reset configurations for new sheet
+            colWidths = {};
+            hiddenColumns.clear();
+            selectedAddrCols = []; // Clear address cols as layout might differ
+            filterConfigs = []; // Clear filters
+
+            if (rawData.length > 0) {
+                updateColumnCheckboxes();
+                saveAppState();
+            } else {
+                alert("Sheet trống!");
+            }
         }
 
         els.headerRow.addEventListener('change', () => { updateColumnCheckboxes(); saveAppState(); });
@@ -693,16 +689,27 @@
             const hIndex = parseInt(els.headerRow.value) - 1;
             headers = rawData[hIndex] || [];
             els.addrDropdown.innerHTML = '';
-            if (selectedAddrCols.length === 0) selectedAddrCols = [];
+
+            // Auto detect address
+            if (selectedAddrCols.length === 0) {
+                headers.forEach((h, i) => {
+                    if (!h) return;
+                    const k = String(h).toLowerCase();
+                    if (['địa chỉ', 'address', 'tỉnh', 'thành phố', 'quận', 'huyện', 'phường', 'xã'].some(key => k.includes(key))) {
+                        selectedAddrCols.push(i);
+                    }
+                });
+            }
+
             headers.forEach((h, i) => {
                 if (!h) return;
                 const div = document.createElement('div');
                 div.style.padding = "8px"; div.style.borderBottom = "1px solid #f1f5f9";
-                let isChecked = false;
-                if (selectedAddrCols.length > 0) isChecked = selectedAddrCols.includes(i);
-                else isChecked = ['địa chỉ', 'phường', 'xã', 'quận', 'huyện', 'thành phố', 'tỉnh'].some(keyword => String(h).toLowerCase().includes(keyword));
-                if (isChecked && !selectedAddrCols.includes(i)) selectedAddrCols.push(i);
-                div.innerHTML = `<label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="${i}" ${isChecked ? 'checked' : ''} onchange="updateSelectedAddrCols()"> <span style="font-size:13px;">${i + 1}. ${h}</span></label>`;
+                const isChecked = selectedAddrCols.includes(i);
+                div.innerHTML = `<label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <input type="checkbox" value="${i}" ${isChecked ? 'checked' : ''} onchange="updateSelectedAddrCols()"> 
+                    <span style="font-size:12px; color: #334155;">${i + 1}. ${h}</span>
+                </label>`;
                 els.addrDropdown.appendChild(div);
             });
             updateAddrBtnText();
@@ -710,50 +717,54 @@
 
         function toggleAddrDropdown() { els.addrDropdown.classList.toggle('show'); }
         window.onclick = function (event) {
-            if (!event.target.closest('.addr-dropdown-btn') && !event.target.closest('.addr-dropdown-content')) {
+            if (!event.target.closest('.addr-dropdown-wrapper')) {
                 els.addrDropdown.classList.remove('show');
             }
         }
+
         function updateSelectedAddrCols() {
             const checkboxes = els.addrDropdown.querySelectorAll('input[type="checkbox"]');
             selectedAddrCols = Array.from(checkboxes).filter(cb => cb.checked).map(cb => parseInt(cb.value));
             updateAddrBtnText();
             saveAppState();
         }
+
         function updateAddrBtnText() {
             const btn = document.querySelector('.addr-dropdown-btn');
-            els.addrBtn.innerText = selectedAddrCols.length > 0 ? `Đã chọn ${selectedAddrCols.length} cột` : "📍 Chọn cột địa chỉ...";
-            btn.style.borderColor = selectedAddrCols.length > 0 ? "var(--primary)" : "#e2e8f0";
-            btn.style.color = selectedAddrCols.length > 0 ? "var(--primary)" : "inherit";
-            btn.style.background = selectedAddrCols.length > 0 ? "#eff6ff" : "white";
+            if (selectedAddrCols.length > 0) {
+                els.addrBtnText.innerText = `${selectedAddrCols.length} cột`;
+                els.addrBtnText.style.fontWeight = "600";
+                els.addrBtnText.style.color = "var(--primary)";
+                btn.style.borderColor = "var(--primary)";
+                btn.style.background = "#eff6ff";
+            } else {
+                els.addrBtnText.innerText = "Cột?";
+                els.addrBtnText.style.fontWeight = "400";
+                els.addrBtnText.style.color = "var(--text-main)";
+                btn.style.borderColor = "var(--border)";
+                btn.style.background = "#f8fafc";
+            }
         }
 
-        // --- RENDER & RESIZE & HIDE COLS ---
-        function hideColumn(colIndex) {
-            hiddenColumns.add(colIndex);
-            processInitialData(true);
-        }
-        function resetHiddenColumns() {
-            hiddenColumns.clear();
-            processInitialData(true);
-        }
+        // --- RENDER TABLE ---
         function processInitialData(triggerSave = false) {
-            if (selectedAddrCols.length === 0) return alert("Vui lòng chọn ít nhất 1 cột địa chỉ!");
+            if (selectedAddrCols.length === 0) return alert("Chưa chọn cột địa chỉ!");
             const hIndex = parseInt(els.headerRow.value) - 1;
+
             els.btnRestoreCols.style.display = hiddenColumns.size > 0 ? 'inline-flex' : 'none';
 
+            // 1. Header
             els.tableHead.innerHTML = '';
             const trHead = document.createElement('tr');
-            trHead.appendChild(createResizableTh('STT', colWidths['stt'] || '50px', 'stt', false));
-
+            trHead.appendChild(createResizableTh('STT', colWidths['stt'] || '40px', 'stt', false));
             headers.forEach((h, i) => {
                 if (hiddenColumns.has(i)) return;
-                trHead.appendChild(createResizableTh(h, colWidths[i] || '140px', i, true));
+                trHead.appendChild(createResizableTh(h, colWidths[i] || '120px', i, true));
             });
-
-            trHead.appendChild(createResizableTh('Chỉ Đường', colWidths['action'] || '110px', 'action', false));
+            trHead.appendChild(createResizableTh('Chỉ Đường', colWidths['action'] || '80px', 'action', false));
             els.tableHead.appendChild(trHead);
 
+            // 2. Body
             els.tableBody.innerHTML = '';
             const fragment = document.createDocumentFragment();
             let count = 0;
@@ -764,21 +775,23 @@
                 const tr = document.createElement('tr');
                 tr.dataset.idx = i;
                 tr.dataset.raw = JSON.stringify(row).toLowerCase();
-                let tdHTML = `<td style="text-align:center;color:#64748b;font-size:11px;">${count}</td>`;
+                let tdHTML = `<td style="text-align:center;color:#64748b;font-size:10px;">${count}</td>`;
                 headers.forEach((h, colIdx) => {
                     if (hiddenColumns.has(colIdx)) return;
                     tdHTML += `<td>${row[colIdx] !== undefined ? row[colIdx] : ''}</td>`;
                 });
-                tdHTML += `<td><a href="#" target="_blank" class="link-badge">Link</a></td>`;
+                tdHTML += `<td><a href="#" target="_blank" class="link-badge" style="background:#e2e8f0;color:#64748b;">Link</a></td>`;
                 tr.innerHTML = tdHTML;
                 fragment.appendChild(tr);
             }
             els.tableBody.appendChild(fragment);
 
-            els.filterBar.classList.remove('hidden');
-            els.routingArea.classList.remove('hidden');
+            // 3. UI
+            els.searchRouteRow.classList.remove('hidden');
+            els.filterContainer.classList.remove('hidden');
             els.badge.innerText = `${count}`;
 
+            // 4. Filters
             if (filterConfigs.length === 0) {
                 let districtColIdx = headers.findIndex(h => h && (h.toLowerCase().includes('quận') || h.toLowerCase().includes('huyện')));
                 if (districtColIdx > -1) {
@@ -793,13 +806,7 @@
             if (triggerSave) saveAppState();
         }
 
-        function initCellClickExpand() {
-            els.tableBody.addEventListener('click', function (e) {
-                const td = e.target.closest('td');
-                if (!td || e.target.closest('a') || e.target.classList.contains('col-resizer')) return;
-                td.classList.toggle('expanded-cell');
-            });
-        }
+        // --- UTILS ---
         function createResizableTh(text, width, key, removable = true) {
             const th = document.createElement('th');
             th.style.width = width; th.dataset.key = key;
@@ -809,38 +816,54 @@
             th.innerHTML = html;
             return th;
         }
+
+        function hideColumn(colIndex) { hiddenColumns.add(colIndex); processInitialData(true); }
+        function resetHiddenColumns() { hiddenColumns.clear(); processInitialData(true); }
+
+        function initCellClickExpand() {
+            els.tableBody.addEventListener('click', function (e) {
+                const td = e.target.closest('td');
+                if (!td || e.target.closest('a') || e.target.classList.contains('col-resizer')) return;
+                td.classList.toggle('expanded-cell');
+            });
+        }
+
         function initColResizers() {
             els.table.querySelectorAll('th').forEach(col => {
                 const resizer = col.querySelector('.col-resizer');
                 if (resizer) createDragHandler(resizer, col);
             });
         }
+
         function createDragHandler(resizer, element) {
-            let startPos = 0; let startSize = 0;
-            const mouseDownHandler = function (e) {
-                e.stopPropagation(); startPos = e.clientX;
-                startSize = parseInt(window.getComputedStyle(element).width, 10);
-                document.addEventListener('mousemove', mouseMoveHandler);
-                document.addEventListener('mouseup', mouseUpHandler);
+            let startPos = 0, startSize = 0;
+            const touchStartHandler = (e) => {
+                startPos = e.touches[0].clientX; startSize = parseInt(window.getComputedStyle(element).width, 10);
+                document.addEventListener('touchmove', touchMoveHandler); document.addEventListener('touchend', touchEndHandler);
             };
-            const mouseMoveHandler = function (e) { element.style.width = `${startSize + (e.clientX - startPos)}px`; };
-            const mouseUpHandler = function () {
-                document.removeEventListener('mousemove', mouseMoveHandler);
-                document.removeEventListener('mouseup', mouseUpHandler);
-                if (element.dataset.key) { colWidths[element.dataset.key] = element.style.width; saveAppState(); }
+            const mouseDownHandler = (e) => {
+                e.preventDefault(); startPos = e.clientX; startSize = parseInt(window.getComputedStyle(element).width, 10);
+                document.addEventListener('mousemove', mouseMoveHandler); document.addEventListener('mouseup', mouseUpHandler);
             };
-            resizer.addEventListener('mousedown', mouseDownHandler);
+            const touchMoveHandler = (e) => element.style.width = `${startSize + (e.touches[0].clientX - startPos)}px`;
+            const mouseMoveHandler = (e) => element.style.width = `${startSize + (e.clientX - startPos)}px`;
+            const touchEndHandler = () => { document.removeEventListener('touchmove', touchMoveHandler); document.removeEventListener('touchend', touchEndHandler); saveWidth(); };
+            const mouseUpHandler = () => { document.removeEventListener('mousemove', mouseMoveHandler); document.removeEventListener('mouseup', mouseUpHandler); saveWidth(); };
+            const saveWidth = () => { if (element.dataset.key) { colWidths[element.dataset.key] = element.style.width; saveAppState(); } }
+            resizer.addEventListener('mousedown', mouseDownHandler); resizer.addEventListener('touchstart', touchStartHandler);
         }
 
         // --- LOGIC ---
         function clearCustomerAddress() {
             els.customerAddrInput.value = ''; updateMapLinks(); saveAppState(); els.customerAddrInput.focus();
         }
+
         function updateMapLinks() {
             const customerAddr = els.customerAddrInput.value.trim();
             const rows = els.tableBody.querySelectorAll('tr');
             els.btnOpenBatch.classList.toggle('hidden', customerAddr.length === 0);
             rows.forEach(tr => {
+                if (tr.style.display === 'none') return;
                 const rowIdx = tr.dataset.idx;
                 const rowDataArray = rawData[rowIdx];
                 let shopFullAddr = selectedAddrCols.map(colIdx => rowDataArray[colIdx] ? String(rowDataArray[colIdx]).trim() : "").filter(val => val !== "").join(", ");
@@ -852,55 +875,52 @@
                     if (linkTag) {
                         linkTag.href = finalLink;
                         if (customerAddr) {
-                            linkTag.style.background = "#fff7ed"; linkTag.style.color = "#c2410c"; linkTag.style.border = "1px solid #fdba74";
-                            linkTag.innerHTML = "🚗 Chỉ Đường";
+                            linkTag.style.background = "#fff7ed"; linkTag.style.color = "#c2410c"; linkTag.style.border = "1px solid #fdba74"; linkTag.innerHTML = "🚗 Đi";
                         } else {
-                            linkTag.style.background = "#dcfce7"; linkTag.style.color = "#166534"; linkTag.style.border = "1px solid #bbf7d0";
-                            linkTag.innerHTML = "🗺️ Map Shop";
+                            linkTag.style.background = "#dcfce7"; linkTag.style.color = "#166534"; linkTag.style.border = "1px solid #bbf7d0"; linkTag.innerHTML = "🗺️ Xem";
                         }
                     }
                 }
             });
         }
+
         function openVisibleLinksLimit() {
             const visibleRows = Array.from(els.tableBody.querySelectorAll('tr')).filter(tr => tr.style.display !== 'none');
             const validLinks = visibleRows.map(tr => tr.querySelector('.link-badge')?.href).filter(h => h && h.startsWith('http'));
             const linksToOpen = validLinks.slice(0, 10);
-            if (linksToOpen.length === 0) return alert("Không có link nào!");
-            if (confirm(`Đang hiển thị: ${validLinks.length} dòng.\nMở ${linksToOpen.length} TAB đầu tiên?`)) linksToOpen.forEach(url => window.open(url, '_blank'));
+            if (linksToOpen.length === 0) return alert("Không có link!");
+            if (confirm(`Mở ${linksToOpen.length} TAB đầu tiên?`)) linksToOpen.forEach(url => window.open(url, '_blank'));
         }
 
         // --- FILTERS ---
         function autoPopulateTags(configIndex) {
-            const config = filterConfigs[configIndex];
-            if (!config.auto) return;
+            const config = filterConfigs[configIndex]; if (!config.auto) return;
             const hIndex = parseInt(els.headerRow.value) - 1;
             const uniqueSet = new Set();
             for (let i = hIndex + 1; i < rawData.length; i++) {
-                const val = rawData[i][config.colIndex];
-                if (val) uniqueSet.add(String(val).trim());
+                const val = rawData[i][config.colIndex]; if (val) uniqueSet.add(String(val).trim());
             }
             config.tags = Array.from(uniqueSet).sort();
         }
+
         function renderFilterBar() {
             els.filterContainer.innerHTML = '';
             filterConfigs.forEach(config => {
                 if (config.auto && config.tags.length === 0) autoPopulateTags(filterConfigs.indexOf(config));
-                const item = document.createElement('div');
-                item.style.background = "white"; item.style.border = "1px solid #e2e8f0"; item.style.borderRadius = "20px";
-                item.style.padding = "4px 12px"; item.style.display = "flex"; item.style.alignItems = "center"; item.style.gap = "8px"; item.style.whiteSpace = "nowrap";
+                const item = document.createElement('div'); item.className = "filter-select-wrapper";
                 let selectedVal = config.selectedValue || "";
-                let opts = `<option value="">Tất cả</option>` + config.tags.map(t => `<option value="${t}" ${t === selectedVal ? 'selected' : ''}>${t}</option>`).join('');
-                item.innerHTML = `<span style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;">${config.name}</span><select id="fs-${config.id}" style="border:none;background:transparent;font-weight:500;font-size:13px;max-width:140px;outline:none;" onchange="applyFilters(); saveAppState();">${opts}</select>`;
+                let opts = `<option value="">All</option>` + config.tags.map(t => `<option value="${t}" ${t === selectedVal ? 'selected' : ''}>${t}</option>`).join('');
+                item.innerHTML = `<span style="font-size:10px;font-weight:700;color:var(--primary);text-transform:uppercase;">${config.name}</span>
+                <select id="fs-${config.id}" style="border:none;background:transparent;font-weight:500;font-size:12px;max-width:110px;outline:none;" onchange="applyFilters(); saveAppState();">${opts}</select>`;
                 els.filterContainer.appendChild(item);
             });
             applyFilters();
         }
+
         function applyFilters() {
-            const searchVal = document.getElementById('globalSearch').value.toLowerCase().trim();
+            const searchVal = els.globalSearch.value.toLowerCase().trim();
             const activeFilters = filterConfigs.map(c => {
-                const val = document.getElementById(`fs-${c.id}`)?.value || "";
-                c.selectedValue = val;
+                const val = document.getElementById(`fs-${c.id}`)?.value || ""; c.selectedValue = val;
                 return { colIndex: c.colIndex, val: val.toLowerCase().trim() };
             }).filter(f => f.val !== "");
             const rows = els.tableBody.querySelectorAll('tr');
@@ -927,7 +947,6 @@
             els.modalContainer.innerHTML = '';
             filterConfigs.forEach((c, idx) => {
                 const div = document.createElement('div');
-                div.className = `filter-creator-item ${c.auto ? 'auto-mode' : ''}`;
                 div.style.marginBottom = "10px"; div.style.padding = "10px"; div.style.background = "white"; div.style.borderRadius = "8px"; div.style.border = "1px solid #e2e8f0";
                 let colOpts = headers.map((h, i) => `<option value="${i}" ${i == c.colIndex ? 'selected' : ''}>${i + 1}: ${h}</option>`).join('');
                 div.innerHTML = `
@@ -939,52 +958,76 @@
                 <label style="display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:8px;">
                     <input type="checkbox" ${c.auto ? 'checked' : ''} onchange="filterConfigs[${idx}].auto=this.checked; if(this.checked) autoPopulateTags(${idx}); renderModalUI();"> Auto lấy tags
                 </label>
-                <div>${c.auto ? `<div style="max-height:60px; overflow-y:auto; font-size:11px;">${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : `<input type="text" placeholder="Nhập tag..." style="width:100%;margin-bottom:4px;padding:4px;" onkeydown="if(event.key==='Enter'){if(this.value){filterConfigs[${idx}].tags.push(this.value.trim()); this.value=''; renderModalUI();}}"><div>${c.tags.map((t, ti) => `<span class="tag">${t} <span onclick="filterConfigs[${idx}].tags.splice(${ti},1);renderModalUI();" style="color:red;cursor:pointer;">×</span></span>`).join('')}</div>`}</div>`;
+                <div>${c.auto ? `<div style="max-height:60px; overflow-y:auto; font-size:11px;">${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` :
+                        `<input type="text" placeholder="Nhập tag + Enter" style="width:100%;margin-bottom:4px;padding:4px;border:1px solid #e2e8f0;border-radius:4px;" onkeydown="if(event.key==='Enter'){if(this.value){filterConfigs[${idx}].tags.push(this.value.trim()); this.value=''; renderModalUI();}}">
+                    <div>${c.tags.map((t, ti) => `<span class="tag">${t} <span onclick="filterConfigs[${idx}].tags.splice(${ti},1);renderModalUI();" style="color:red;cursor:pointer;">×</span></span>`).join('')}</div>`}
+                </div>`;
                 els.modalContainer.appendChild(div);
             });
         }
-        function addNewFilterGroupUI() { filterConfigs.push({ id: Date.now(), name: "Bộ lọc mới", colIndex: 0, tags: [], auto: false, selectedValue: "" }); renderModalUI(); }
+        function addNewFilterGroupUI() { filterConfigs.push({ id: Date.now(), name: "Filter Mới", colIndex: 0, tags: [], auto: false, selectedValue: "" }); renderModalUI(); }
         function saveFiltersAndApply() { closeFilterManager(); renderFilterBar(); saveAppState(); }
 
         // --- IMPORT/EXPORT/STATE ---
         function triggerImport() { document.getElementById('importConfigInput').click(); }
         function exportFilterConfig() {
             const ws = XLSX.utils.json_to_sheet(filterConfigs.map(c => ({ "Name": c.name, "ColIndex": c.colIndex, "Tags": c.tags.join(','), "Auto": c.auto ? 1 : 0 })));
-            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Config"); XLSX.writeFile(wb, "Config_ABBOOT_VKAM.xlsx");
+            const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Config"); XLSX.writeFile(wb, "Config_VKAM.xlsx");
         }
         document.getElementById('importConfigInput').addEventListener('change', function (e) {
             const file = e.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function (ev) {
                 try {
-                    const data = new Uint8Array(ev.target.result);
-                    const wb = XLSX.read(data, { type: 'array' });
+                    const data = new Uint8Array(ev.target.result); const wb = XLSX.read(data, { type: 'array' });
                     const importedData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
                     if (!importedData.length) return alert("File lỗi!");
                     filterConfigs = importedData.map(d => ({
-                        id: Date.now() + Math.random(), name: d.Name || "Bộ lọc nhập", colIndex: parseInt(d.ColIndex || 0), tags: d.Tags ? String(d.Tags).split(',') : [], auto: !!d.Auto, selectedValue: ""
+                        id: Date.now() + Math.random(), name: d.Name || "Filter", colIndex: parseInt(d.ColIndex || 0), tags: d.Tags ? String(d.Tags).split(',') : [], auto: !!d.Auto, selectedValue: ""
                     }));
                     renderFilterBar(); applyFilters(); saveAppState(); alert("Đã nhập cấu hình!");
                 } catch (err) { alert("Lỗi file!"); }
             }; reader.readAsArrayBuffer(file); this.value = '';
         });
+
         function debouncedSave() { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveAppState, 1000); }
         function saveAppState() {
-            const state = { rawData, headers, config: { headerRow: els.headerRow.value, selectedAddrCols, customerAddress: els.customerAddrInput.value, globalSearch: els.globalSearch.value }, filters: filterConfigs, layout: { colWidths, hiddenColumns: Array.from(hiddenColumns) } };
-            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); els.saveStatus.style.opacity = 1; setTimeout(() => els.saveStatus.style.opacity = 0, 2000); } catch (e) { localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, rawData: [] })); }
+            const state = {
+                rawData, headers, sheetNames, currentSheetName,
+                config: { headerRow: els.headerRow.value, selectedAddrCols, customerAddress: els.customerAddrInput.value, globalSearch: els.globalSearch.value },
+                filters: filterConfigs, layout: { colWidths, hiddenColumns: Array.from(hiddenColumns) }
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                els.saveStatus.style.opacity = 1; setTimeout(() => els.saveStatus.style.opacity = 0, 2000);
+            } catch (e) { localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, rawData: [] })); }
         }
+
         function loadAppState() {
             const json = localStorage.getItem(STORAGE_KEY); if (!json) return;
             try {
                 const state = JSON.parse(json);
-                if (state.config) { els.headerRow.value = state.config.headerRow || 1; selectedAddrCols = state.config.selectedAddrCols || []; els.customerAddrInput.value = state.config.customerAddress || ""; els.globalSearch.value = state.config.globalSearch || ""; }
+                if (state.config) {
+                    els.headerRow.value = state.config.headerRow || 1; selectedAddrCols = state.config.selectedAddrCols || [];
+                    els.customerAddrInput.value = state.config.customerAddress || ""; els.globalSearch.value = state.config.globalSearch || "";
+                }
                 if (state.layout) { colWidths = state.layout.colWidths || {}; hiddenColumns = new Set(state.layout.hiddenColumns); }
                 if (state.filters) filterConfigs = state.filters;
-                if (state.rawData?.length > 0) {
-                    rawData = state.rawData; headers = state.headers || []; document.querySelector('.file-name-display').innerText = "📄 Dữ liệu cũ (Đã lưu)";
-                    els.configControls.classList.remove('hidden'); updateColumnCheckboxes(); processInitialData(false);
+
+                // Restore Sheet Info
+                if (state.sheetNames) sheetNames = state.sheetNames;
+                if (state.currentSheetName) currentSheetName = state.currentSheetName;
+                if (sheetNames.length > 0) {
+                    renderSheetOptions();
+                    els.sheetSelector.value = currentSheetName || "";
                 }
-            } catch (e) { localStorage.removeItem(STORAGE_KEY); }
+
+                if (state.rawData?.length > 0) {
+                    rawData = state.rawData; headers = state.headers || [];
+                    els.fileNameDisplay.innerText = "Dữ liệu cũ (Đã lưu)";
+                    updateColumnCheckboxes(); processInitialData(false);
+                }
+            } catch (e) { console.error(e); localStorage.removeItem(STORAGE_KEY); }
         }
         function resetAllData() { if (confirm("Xóa toàn bộ dữ liệu?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
     </script>
