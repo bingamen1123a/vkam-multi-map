@@ -545,7 +545,7 @@
     <div class="combined-search-bar hidden" id="searchRouteRow">
         <div class="input-wrapper search-wrapper">
             <span class="input-icon" style="color:#94a3b8;">🔍</span>
-            <input type="text" id="globalSearch" class="custom-input" placeholder="Tìm..."
+            <input type="text" id="globalSearch" class="custom-input" placeholder="Tìm kiếm nhanh tên CH, ID, SĐT..."
                 onkeyup="applyFilters(); debouncedSave();">
             <button class="clear-btn"
                 onclick="document.getElementById('globalSearch').value=''; applyFilters();">✕</button>
@@ -732,7 +732,7 @@
         function updateAddrBtnText() {
             const btn = document.querySelector('.addr-dropdown-btn');
             if (selectedAddrCols.length > 0) {
-                els.addrBtnText.innerText = `${selectedAddrCols.length} cột`;
+                els.addrBtnText.innerText = `${selectedAddrCols.length} cột làm địa chỉ tìm kiếm`;
                 els.addrBtnText.style.fontWeight = "600";
                 els.addrBtnText.style.color = "var(--primary)";
                 btn.style.borderColor = "var(--primary)";
