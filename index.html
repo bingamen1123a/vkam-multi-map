@@ -1024,7 +1024,7 @@
 
                 if (state.rawData?.length > 0) {
                     rawData = state.rawData; headers = state.headers || [];
-                    els.fileNameDisplay.innerText = "Dữ liệu cũ (Đã lưu)";
+                    els.fileNameDisplay.innerText = "AutoSave";
                     updateColumnCheckboxes(); processInitialData(false);
                 }
             } catch (e) { console.error(e); localStorage.removeItem(STORAGE_KEY); }
