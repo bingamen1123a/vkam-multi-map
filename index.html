@@ -10,19 +10,17 @@
     <style>
         :root {
             --primary: #3b82f6;
-            /* Xanh hiện đại */
             --primary-hover: #2563eb;
             --secondary: #64748b;
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
-            --bg-body: #f8fafc;
+            --bg-body: #f1f5f9;
             --bg-surface: #ffffff;
             --border: #e2e8f0;
             --text-main: #1e293b;
             --text-light: #64748b;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --radius: 8px;
             --header-h: 60px;
         }
@@ -46,22 +44,23 @@
 
         /* --- HEADER --- */
         .app-header {
-            height: var(--header-h);
             background: var(--bg-surface);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 16px;
+            padding: 10px 16px;
             box-shadow: var(--shadow-sm);
             flex-shrink: 0;
             z-index: 50;
+            gap: 10px;
         }
 
         .brand-section {
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-shrink: 0;
         }
 
         .app-logo {
@@ -76,6 +75,7 @@
             font-size: 11px;
             background: #eff6ff;
             color: var(--primary);
+            padding: 2px 6px;
             border-radius: 4px;
             font-weight: 600;
         }
@@ -83,16 +83,18 @@
         .header-actions {
             display: flex;
             gap: 8px;
+            align-items: center;
+            flex-wrap: nowrap;
         }
 
         /* --- CONTROL BAR --- */
         .control-bar {
             background: var(--bg-surface);
-            padding: 12px 16px;
+            padding: 10px 16px;
             border-bottom: 1px solid var(--border);
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             flex-shrink: 0;
         }
@@ -101,13 +103,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #f1f5f9;
+            background: #f8fafc;
             padding: 4px;
             border-radius: var(--radius);
             border: 1px solid var(--border);
         }
 
-        /* File Input Styling */
+        /* File Input */
         .file-input-wrapper {
             position: relative;
             overflow: hidden;
@@ -136,13 +138,8 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-file-trigger:hover {
-            border-color: var(--primary);
-            color: var(--primary);
+            width: 100%;
+            justify-content: center;
         }
 
         /* Routing Area */
@@ -156,12 +153,6 @@
             padding: 6px 12px;
             border-radius: var(--radius);
             min-width: 200px;
-            transition: 0.3s;
-        }
-
-        .routing-wrapper:focus-within {
-            border-color: #f97316;
-            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
         }
 
         .routing-input {
@@ -179,38 +170,33 @@
             font-weight: 400;
         }
 
-        /* --- FILTER & SEARCH --- */
+        /* Filter Bar */
         .filter-bar {
             background: var(--bg-surface);
             padding: 8px 16px;
             border-bottom: 1px solid var(--border);
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             flex-shrink: 0;
+            overflow-x: auto;
+            /* Allow scroll horizontally */
         }
 
         .search-box {
             position: relative;
             flex: 1;
-            max-width: 400px;
+            max-width: 300px;
+            min-width: 150px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 8px 12px 8px 36px;
+            padding: 8px 12px 8px 32px;
             border: 1px solid var(--border);
             border-radius: var(--radius);
             background: #f8fafc;
-            transition: 0.2s;
             font-size: 13px;
-        }
-
-        .search-box input:focus {
-            background: white;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-            outline: none;
         }
 
         .search-icon {
@@ -234,7 +220,7 @@
             display: none;
         }
 
-        /* --- MAIN TABLE --- */
+        /* --- TABLE --- */
         .main-content {
             flex: 1;
             overflow: hidden;
@@ -247,7 +233,6 @@
             background: white;
             border-radius: var(--radius);
             border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
             flex: 1;
             overflow: auto;
             position: relative;
@@ -264,22 +249,19 @@
             background: #f8fafc;
             color: var(--text-light);
             font-weight: 600;
-            text-transform: uppercase;
-            font-size: 11px;
-            padding: 12px;
+            font-size: 12px;
+            padding: 10px 8px;
             border-bottom: 1px solid var(--border);
             border-right: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 10;
             white-space: nowrap;
-            letter-spacing: 0.5px;
-            backdrop-filter: blur(4px);
-            /* Glass effect */
+            text-align: left;
         }
 
         td {
-            padding: 10px 12px;
+            padding: 8px;
             border-bottom: 1px solid var(--border);
             border-right: 1px solid #f1f5f9;
             font-size: 13px;
@@ -287,50 +269,45 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 48px;
-            transition: background 0.1s;
+            height: 44px;
         }
 
         tr:hover td {
             background: #f8fafc;
         }
 
-        /* Expanded Cell Logic */
         td.expanded-cell {
             white-space: pre-wrap !important;
-            word-break: break-word;
-            overflow: visible !important;
             height: auto !important;
             background: #eff6ff !important;
             position: relative;
             z-index: 5;
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* --- BUTTONS & ELEMENTS --- */
+        /* --- BUTTONS --- */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            padding: 7px 14px;
+            padding: 8px 12px;
             border-radius: 6px;
             font-weight: 600;
             font-size: 13px;
             border: none;
             cursor: pointer;
-            transition: all 0.2s;
             white-space: nowrap;
+        }
+
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 12px;
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-hover);
-            transform: translateY(-1px);
         }
 
         .btn-outline {
@@ -339,56 +316,23 @@
             color: var(--text-light);
         }
 
-        .btn-outline:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: #f8fafc;
-        }
-
         .btn-danger {
             background: #fee2e2;
             color: #dc2626;
         }
 
-        .btn-danger:hover {
-            background: #fecaca;
-        }
-
-        .badge-count {
-            background: var(--text-main);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 99px;
-            font-size: 10px;
-            margin-left: 5px;
-        }
-
         /* Custom Select & Inputs */
-        input[type="number"],
-        select {
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 4px 8px;
-            outline: none;
-        }
-
-        input:focus,
-        select:focus {
-            border-color: var(--primary);
-        }
-
-        /* Address Dropdown */
         .addr-dropdown-btn {
-            padding: 6px 12px;
+            padding: 6px 10px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 6px;
             font-size: 13px;
             cursor: pointer;
-            min-width: 160px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 5px;
         }
 
         .addr-dropdown-content {
@@ -397,7 +341,7 @@
             left: 0;
             background: white;
             border: 1px solid var(--border);
-            box-shadow: var(--shadow-md);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             z-index: 100;
             max-height: 250px;
             overflow-y: auto;
@@ -412,30 +356,25 @@
             display: block;
         }
 
-        /* Link Badge */
         .link-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 12px;
-            border-radius: 6px;
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
             font-weight: 600;
             font-size: 11px;
             text-decoration: none;
-            transition: 0.2s;
-            width: 100%;
             text-align: center;
+            width: 100%;
         }
 
-        /* --- MODAL --- */
+        /* Modal & Helpers */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(2px);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1000;
             display: none;
             justify-content: center;
@@ -444,159 +383,18 @@
 
         .modal-overlay.open {
             display: flex;
-            animation: fadeIn 0.2s ease-out;
         }
 
         .modal-content {
             background: white;
-            width: 600px;
-            max-width: 95%;
-            max-height: 85vh;
+            width: 95%;
+            max-width: 600px;
+            max-height: 90vh;
             border-radius: 12px;
             display: flex;
             flex-direction: column;
-            box-shadow: var(--shadow-md);
-            animation: slideUp 0.2s ease-out;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .tag {
-            background: #f1f5f9;
-            color: var(--text-main);
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            margin: 2px;
-            display: inline-block;
-            border: 1px solid var(--border);
-        }
-
-        .filter-creator-item {
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-            background: #fff;
-        }
-
-        .filter-creator-item.auto-mode {
-            background: #f0fdf4;
-            border-color: #86efac;
-        }
-
-        /* --- RESPONSIVE MOBILE --- */
-        @media (max-width: 768px) {
-            :root {
-                --header-h: 56px;
-            }
-
-            .app-title span:last-child {
-                display: none;
-            }
-
-            .badge-count {
-                display: none;
-            }
-
-            /* Show in summary instead */
-
-            .header-actions .btn {
-                padding: 6px 8px;
-                font-size: 18px;
-                /* Icons only mode if needed */
-            }
-
-            .header-actions .btn span {
-                display: none;
-            }
-
-            /* Hide text on mobile buttons */
-            .header-actions .btn:after {
-                content: attr(title);
-                display: none;
-            }
-
-            /* Tooltip logic if needed */
-
-            .control-bar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 10px;
-                gap: 10px;
-            }
-
-            .control-group {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .file-input-wrapper {
-                width: 100%;
-            }
-
-            .btn-file-trigger {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .routing-wrapper {
-                width: 100%;
-                margin-left: 0;
-            }
-
-            .filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 10px;
-            }
-
-            .search-box {
-                max-width: 100%;
-            }
-
-            #dynamicFiltersContainer {
-                padding-bottom: 8px;
-            }
-
-            /* Adjust table for mobile */
-            th {
-                padding: 8px;
-                font-size: 10px;
-            }
-
-            td {
-                padding: 8px;
-                font-size: 12px;
-            }
-
-            /* Hide less important buttons text on mobile */
-            #btnRestoreCols {
-                font-size: 11px;
-            }
-        }
-
-        /* Utilities */
         .hidden {
             display: none !important;
         }
@@ -605,27 +403,113 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 4px;
+            width: 5px;
             height: 100%;
             cursor: col-resize;
-            background: transparent;
-        }
-
-        .col-resizer:hover {
-            background: var(--primary);
-            opacity: 0.5;
         }
 
         .col-remove-btn {
             color: #ef4444;
             cursor: pointer;
-            opacity: 0.3;
             margin-right: 4px;
-            font-size: 10px;
+            font-size: 14px;
         }
 
-        th:hover .col-remove-btn {
-            opacity: 1;
+        .tag {
+            background: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin: 2px;
+            border: 1px solid var(--border);
+            display: inline-block;
+        }
+
+        /* --- RESPONSIVE MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 768px) {
+
+            /* 1. Header Layout Fix: Stack logo and buttons vertically */
+            .app-header {
+                flex-direction: column;
+                align-items: stretch;
+                height: auto;
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .brand-section {
+                justify-content: center;
+                width: 100%;
+            }
+
+            /* Enable horizontal scroll for buttons if they are too wide, OR wrap them */
+            .header-actions {
+                width: 100%;
+                display: flex;
+                overflow-x: auto;
+                /* Scroll horizontally if needed */
+                justify-content: space-between;
+                /* Spread buttons out */
+                padding-bottom: 2px;
+                /* Space for scrollbar */
+            }
+
+            /* Text on buttons hidden on extremely small screens if needed, 
+               but current design tries to keep them visible by scrolling */
+
+            /* 2. Control Bar Stacking */
+            .control-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 10px 12px;
+            }
+
+            .control-group {
+                width: 100%;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            /* Make inputs full width or flex */
+            .file-input-wrapper {
+                flex: 1;
+            }
+
+            #configControls {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            /* Address dropdown takes more space */
+            .addr-dropdown-btn {
+                flex: 1;
+                min-width: 120px;
+            }
+
+            /* Header row input smaller */
+            #headerRow {
+                width: 40px !important;
+            }
+
+            /* 3. Routing Area */
+            .routing-wrapper {
+                width: 100%;
+                margin-top: 5px;
+            }
+
+            /* 4. Filter Bar */
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: 100%;
+                margin-bottom: 8px;
+            }
+
+            /* Hide badge count in header, show in footer if needed (optional) */
+            /* #rowCountBadge { display: none; } */
         }
     </style>
 </head>
@@ -635,64 +519,67 @@
     <header class="app-header">
         <div class="brand-section">
             <div class="app-logo">VKAM</div>
-            <div class="app-title" style="display:flex; flex-direction:column; line-height:1.1;">
+            <div style="display:flex; flex-direction:column; line-height:1.1;">
                 <span style="font-weight:700; font-size:14px;">Multiple Maps</span>
                 <span class="app-subtitle">ABBOOT SYSTEM</span>
             </div>
-            <span id="rowCountBadge" class="badge-count" style="display:inline-block; margin-left:8px;">...</span>
+            <span id="rowCountBadge" class="badge-count"
+                style="background:#1e293b; color:white; padding:2px 8px; border-radius:10px; font-size:10px;">...</span>
             <span id="saveStatus"
-                style="font-size: 12px; color: var(--success); opacity: 0; transition: opacity 0.5s; display:flex; align-items:center; gap:4px; margin-left: 8px;">
-                ✓ Đã lưu
-            </span>
+                style="font-size: 12px; color: var(--success); opacity: 0; transition: opacity 0.5s;">✓ Đã lưu</span>
         </div>
+
         <div class="header-actions">
-            <button class="btn btn-danger" onclick="resetAllData()" title="Xóa dữ liệu">🗑️ <span>Xóa</span></button>
+            <button class="btn btn-danger btn-sm" onclick="resetAllData()" title="Xóa dữ liệu">🗑️ Xóa</button>
             <input type="file" id="importConfigInput" accept=".xlsx, .xls" class="hidden">
-            <button class="btn btn-outline" id="btnRestoreCols" onclick="resetHiddenColumns()" style="display:none;"
-                title="Hiện lại cột">👁️</button>
-            <button class="btn btn-outline" onclick="triggerImport()" title="Import Cấu hình">📥
-                <span>Import</span></button>
-            <button class="btn btn-outline" onclick="exportFilterConfig()" title="Export Cấu hình">📤
-                <span>Export</span></button>
-            <button class="btn btn-primary" onclick="openFilterManager()" title="Quản lý bộ lọc">⚙️ <span>Cài
-                    đặt</span></button>
+
+            <button class="btn btn-outline btn-sm" id="btnRestoreCols" onclick="resetHiddenColumns()"
+                style="display:none; color: var(--primary); border-color: var(--primary);">
+                👁️ Hiện lại cột
+            </button>
+
+            <button class="btn btn-outline btn-sm" onclick="triggerImport()" title="Import">📥 Import</button>
+            <button class="btn btn-outline btn-sm" onclick="exportFilterConfig()" title="Export">📤 Export</button>
+            <button class="btn btn-primary btn-sm" onclick="openFilterManager()" title="Cài đặt">⚙️ Cài đặt</button>
         </div>
     </header>
 
     <div class="control-bar">
         <div class="control-group" style="background:transparent; border:none; padding:0; flex-wrap:wrap; gap:8px;">
-            <div class="file-input-wrapper">
+            <div class="file-input-wrapper" style="flex:1;">
                 <button class="btn-file-trigger">📂 <span class="file-name-display">Chọn file Excel...</span></button>
                 <input type="file" id="excelFile" accept=".xlsx, .xls" onchange="handleFileSelect(this)">
             </div>
         </div>
 
-        <div id="configControls" class="control-group hidden" style="flex:1; justify-content:flex-start;">
-            <label style="font-size:12px; color:var(--text-light); font-weight:600; white-space:nowrap;">Dòng tiêu
-                đề:</label>
-            <input type="number" id="headerRow" value="1" min="1" style="width: 50px; text-align:center;"
-                onchange="saveAppState()">
+        <div id="configControls" class="control-group hidden" style="flex:1; justify-content:space-between;">
+            <div style="display:flex; align-items:center; gap:5px;">
+                <label style="font-size:12px; color:var(--text-light); white-space:nowrap;">Dòng tiêu đề:</label>
+                <input type="number" id="headerRow" value="1" min="1"
+                    style="width: 45px; text-align:center; border:1px solid #cbd5e1; border-radius:4px; padding:4px;"
+                    onchange="saveAppState()">
+            </div>
 
-            <div style="position:relative;">
+            <div style="position:relative; flex:1; max-width: 200px;">
                 <div class="addr-dropdown-btn" onclick="toggleAddrDropdown()">
-                    <span>📍 Chọn cột địa chỉ...</span>
+                    <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">📍 Chọn cột địa
+                        chỉ...</span>
                     <small>▼</small>
                 </div>
                 <div id="addrDropdownContent" class="addr-dropdown-content"></div>
             </div>
 
-            <button class="btn btn-primary" style="padding: 6px 12px;" onclick="processInitialData(true)">Áp
-                dụng</button>
+            <button class="btn btn-primary btn-sm" onclick="processInitialData(true)">Áp dụng</button>
         </div>
 
         <div id="routingArea" class="routing-wrapper hidden">
             <span style="font-size:16px;">🏠</span>
-            <input type="text" class="routing-input" id="customerAddress" placeholder="Nhập địa chỉ của bạn..."
+            <input type="text" class="routing-input" id="customerAddress" placeholder="Nhập địa chỉ nhà..."
                 onkeyup="updateMapLinks(); debouncedSave();">
             <button onclick="clearCustomerAddress()"
-                style="border:none; background:none; color:var(--text-light); cursor:pointer; font-size:16px; padding:0 4px;">✕</button>
-            <button id="btnOpenBatch" class="btn btn-primary hidden" onclick="openVisibleLinksLimit()"
-                style="font-size: 11px; padding: 4px 10px; background: #ea580c; box-shadow: 0 2px 5px rgba(234,88,12,0.3);">
+                style="border:none; background:none; color:var(--text-light); cursor:pointer;">✕</button>
+            <button id="btnOpenBatch" class="btn btn-primary btn-sm hidden" onclick="openVisibleLinksLimit()"
+                style="background: #ea580c; white-space:nowrap;">
                 Mở 10 Map
             </button>
         </div>
@@ -701,7 +588,7 @@
     <div id="filterBar" class="filter-bar hidden">
         <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="globalSearch" placeholder="Tìm tên, SĐT, địa chỉ..."
+            <input type="text" id="globalSearch" placeholder="Tìm tên, SĐT..."
                 onkeyup="applyFilters(); debouncedSave();">
         </div>
         <div id="dynamicFiltersContainer">
@@ -716,10 +603,9 @@
                     <tr>
                         <td colspan="10" style="text-align:center; padding: 60px 20px;">
                             <div
-                                style="color: var(--text-light); display:flex; flex-direction:column; align-items:center; gap:15px;">
-                                <div style="font-size: 50px; opacity:0.3;">📁</div>
-                                <div style="font-weight:500;">Chưa có dữ liệu</div>
-                                <div style="font-size:13px;">Vui lòng chọn file Excel để bắt đầu</div>
+                                style="color: var(--text-light); display:flex; flex-direction:column; align-items:center; gap:10px;">
+                                <div style="font-size: 40px; opacity:0.3;">📁</div>
+                                <div style="font-size:13px;">Chưa có dữ liệu</div>
                             </div>
                         </td>
                     </tr>
@@ -731,20 +617,16 @@
     <div id="filterModal" class="modal-overlay">
         <div class="modal-content">
             <div
-                style="padding: 15px 20px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border-radius:12px 12px 0 0;">
-                <h3 style="margin:0; font-size:16px; color:var(--text-main);">⚙️ Quản Lý Bộ Lọc</h3>
+                style="padding: 15px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border-radius:12px 12px 0 0;">
+                <h3 style="margin:0; font-size:16px;">⚙️ Quản Lý Bộ Lọc</h3>
                 <button onclick="closeFilterManager()"
-                    style="background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-light);">✕</button>
+                    style="background:none; border:none; font-size:20px; cursor:pointer;">✕</button>
             </div>
-
-            <div style="padding: 20px; overflow-y: auto; flex: 1; background:#f1f5f9;" id="filterGroupsContainer"></div>
-
+            <div style="padding: 15px; overflow-y: auto; flex: 1; background:#f1f5f9;" id="filterGroupsContainer"></div>
             <div
-                style="padding: 15px 20px; border-top: 1px solid var(--border); display:flex; gap:12px; background:white; border-radius:0 0 12px 12px;">
-                <button class="btn btn-outline" style="flex:1; justify-content:center;"
-                    onclick="addNewFilterGroupUI()">+ Thêm nhóm</button>
-                <button class="btn btn-primary" style="flex:1; justify-content:center;"
-                    onclick="saveFiltersAndApply()">Lưu & Áp Dụng</button>
+                style="padding: 15px; border-top: 1px solid var(--border); display:flex; gap:10px; background:white; border-radius:0 0 12px 12px;">
+                <button class="btn btn-outline" style="flex:1;" onclick="addNewFilterGroupUI()">+ Thêm nhóm</button>
+                <button class="btn btn-primary" style="flex:1;" onclick="saveFiltersAndApply()">Lưu & Áp Dụng</button>
             </div>
         </div>
     </div>
@@ -788,9 +670,7 @@
         function handleFileSelect(input) {
             const file = input.files[0];
             if (!file) return;
-            // Update UI for filename
             document.querySelector('.file-name-display').innerText = file.name;
-
             const reader = new FileReader();
             reader.onload = function (e) {
                 const data = new Uint8Array(e.target.result);
@@ -817,14 +697,11 @@
             headers.forEach((h, i) => {
                 if (!h) return;
                 const div = document.createElement('div');
-                div.style.padding = "8px";
-                div.style.borderBottom = "1px solid #f1f5f9";
-
+                div.style.padding = "8px"; div.style.borderBottom = "1px solid #f1f5f9";
                 let isChecked = false;
                 if (selectedAddrCols.length > 0) isChecked = selectedAddrCols.includes(i);
                 else isChecked = ['địa chỉ', 'phường', 'xã', 'quận', 'huyện', 'thành phố', 'tỉnh'].some(keyword => String(h).toLowerCase().includes(keyword));
                 if (isChecked && !selectedAddrCols.includes(i)) selectedAddrCols.push(i);
-
                 div.innerHTML = `<label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="${i}" ${isChecked ? 'checked' : ''} onchange="updateSelectedAddrCols()"> <span style="font-size:13px;">${i + 1}. ${h}</span></label>`;
                 els.addrDropdown.appendChild(div);
             });
@@ -846,15 +723,9 @@
         function updateAddrBtnText() {
             const btn = document.querySelector('.addr-dropdown-btn');
             els.addrBtn.innerText = selectedAddrCols.length > 0 ? `Đã chọn ${selectedAddrCols.length} cột` : "📍 Chọn cột địa chỉ...";
-            if (selectedAddrCols.length > 0) {
-                btn.style.borderColor = "var(--primary)";
-                btn.style.color = "var(--primary)";
-                btn.style.background = "#eff6ff";
-            } else {
-                btn.style.borderColor = "#e2e8f0";
-                btn.style.color = "inherit";
-                btn.style.background = "white";
-            }
+            btn.style.borderColor = selectedAddrCols.length > 0 ? "var(--primary)" : "#e2e8f0";
+            btn.style.color = selectedAddrCols.length > 0 ? "var(--primary)" : "inherit";
+            btn.style.background = selectedAddrCols.length > 0 ? "#eff6ff" : "white";
         }
 
         // --- RENDER & RESIZE & HIDE COLS ---
@@ -862,16 +733,13 @@
             hiddenColumns.add(colIndex);
             processInitialData(true);
         }
-
         function resetHiddenColumns() {
             hiddenColumns.clear();
             processInitialData(true);
         }
-
         function processInitialData(triggerSave = false) {
             if (selectedAddrCols.length === 0) return alert("Vui lòng chọn ít nhất 1 cột địa chỉ!");
             const hIndex = parseInt(els.headerRow.value) - 1;
-
             els.btnRestoreCols.style.display = hiddenColumns.size > 0 ? 'inline-flex' : 'none';
 
             els.tableHead.innerHTML = '';
@@ -880,7 +748,7 @@
 
             headers.forEach((h, i) => {
                 if (hiddenColumns.has(i)) return;
-                trHead.appendChild(createResizableTh(h, colWidths[i] || '150px', i, true));
+                trHead.appendChild(createResizableTh(h, colWidths[i] || '140px', i, true));
             });
 
             trHead.appendChild(createResizableTh('Chỉ Đường', colWidths['action'] || '110px', 'action', false));
@@ -896,14 +764,11 @@
                 const tr = document.createElement('tr');
                 tr.dataset.idx = i;
                 tr.dataset.raw = JSON.stringify(row).toLowerCase();
-
                 let tdHTML = `<td style="text-align:center;color:#64748b;font-size:11px;">${count}</td>`;
-
                 headers.forEach((h, colIdx) => {
                     if (hiddenColumns.has(colIdx)) return;
                     tdHTML += `<td>${row[colIdx] !== undefined ? row[colIdx] : ''}</td>`;
                 });
-
                 tdHTML += `<td><a href="#" target="_blank" class="link-badge">Link</a></td>`;
                 tr.innerHTML = tdHTML;
                 fragment.appendChild(tr);
@@ -935,75 +800,54 @@
                 td.classList.toggle('expanded-cell');
             });
         }
-
         function createResizableTh(text, width, key, removable = true) {
             const th = document.createElement('th');
-            th.style.width = width;
-            th.dataset.key = key;
-
+            th.style.width = width; th.dataset.key = key;
             let html = ``;
-            if (removable) {
-                html += `<span class="col-remove-btn" onclick="hideColumn(${key})" title="Ẩn cột này">✕</span>`;
-            }
+            if (removable) html += `<span class="col-remove-btn" onclick="hideColumn(${key})">✕</span>`;
             html += `${text}<div class="col-resizer"></div>`;
-
             th.innerHTML = html;
             return th;
         }
-
         function initColResizers() {
             els.table.querySelectorAll('th').forEach(col => {
                 const resizer = col.querySelector('.col-resizer');
                 if (resizer) createDragHandler(resizer, col);
             });
         }
-
         function createDragHandler(resizer, element) {
             let startPos = 0; let startSize = 0;
             const mouseDownHandler = function (e) {
-                e.stopPropagation();
-                startPos = e.clientX;
-                const styles = window.getComputedStyle(element);
-                startSize = parseInt(styles.width, 10);
+                e.stopPropagation(); startPos = e.clientX;
+                startSize = parseInt(window.getComputedStyle(element).width, 10);
                 document.addEventListener('mousemove', mouseMoveHandler);
                 document.addEventListener('mouseup', mouseUpHandler);
             };
-            const mouseMoveHandler = function (e) {
-                const diff = e.clientX - startPos;
-                element.style.width = `${startSize + diff}px`;
-            };
+            const mouseMoveHandler = function (e) { element.style.width = `${startSize + (e.clientX - startPos)}px`; };
             const mouseUpHandler = function () {
                 document.removeEventListener('mousemove', mouseMoveHandler);
                 document.removeEventListener('mouseup', mouseUpHandler);
-                const key = element.dataset.key;
-                if (key) { colWidths[key] = element.style.width; saveAppState(); }
+                if (element.dataset.key) { colWidths[element.dataset.key] = element.style.width; saveAppState(); }
             };
             resizer.addEventListener('mousedown', mouseDownHandler);
         }
 
         // --- LOGIC ---
         function clearCustomerAddress() {
-            els.customerAddrInput.value = '';
-            updateMapLinks();
-            saveAppState();
-            els.customerAddrInput.focus();
+            els.customerAddrInput.value = ''; updateMapLinks(); saveAppState(); els.customerAddrInput.focus();
         }
         function updateMapLinks() {
             const customerAddr = els.customerAddrInput.value.trim();
             const rows = els.tableBody.querySelectorAll('tr');
-            if (customerAddr.length > 0) els.btnOpenBatch.classList.remove('hidden');
-            else els.btnOpenBatch.classList.add('hidden');
-
+            els.btnOpenBatch.classList.toggle('hidden', customerAddr.length === 0);
             rows.forEach(tr => {
                 const rowIdx = tr.dataset.idx;
                 const rowDataArray = rawData[rowIdx];
                 let shopFullAddr = selectedAddrCols.map(colIdx => rowDataArray[colIdx] ? String(rowDataArray[colIdx]).trim() : "").filter(val => val !== "").join(", ");
-
                 if (shopFullAddr) {
                     let finalLink = BASE_URL_ROOT;
                     if (customerAddr) finalLink += encodeURIComponent(customerAddr) + "/" + encodeURIComponent(shopFullAddr);
                     else finalLink = "https://www.google.com/maps/search/" + encodeURIComponent(shopFullAddr);
-
                     const linkTag = tr.querySelector('.link-badge');
                     if (linkTag) {
                         linkTag.href = finalLink;
@@ -1018,15 +862,12 @@
                 }
             });
         }
-
         function openVisibleLinksLimit() {
             const visibleRows = Array.from(els.tableBody.querySelectorAll('tr')).filter(tr => tr.style.display !== 'none');
             const validLinks = visibleRows.map(tr => tr.querySelector('.link-badge')?.href).filter(h => h && h.startsWith('http'));
             const linksToOpen = validLinks.slice(0, 10);
             if (linksToOpen.length === 0) return alert("Không có link nào!");
-            if (confirm(`Đang hiển thị: ${validLinks.length} dòng.\nMở ${linksToOpen.length} TAB đầu tiên?`)) {
-                linksToOpen.forEach(url => window.open(url, '_blank'));
-            }
+            if (confirm(`Đang hiển thị: ${validLinks.length} dòng.\nMở ${linksToOpen.length} TAB đầu tiên?`)) linksToOpen.forEach(url => window.open(url, '_blank'));
         }
 
         // --- FILTERS ---
@@ -1034,10 +875,9 @@
             const config = filterConfigs[configIndex];
             if (!config.auto) return;
             const hIndex = parseInt(els.headerRow.value) - 1;
-            const colIdx = config.colIndex;
             const uniqueSet = new Set();
             for (let i = hIndex + 1; i < rawData.length; i++) {
-                const val = rawData[i][colIdx];
+                const val = rawData[i][config.colIndex];
                 if (val) uniqueSet.add(String(val).trim());
             }
             config.tags = Array.from(uniqueSet).sort();
@@ -1047,12 +887,11 @@
             filterConfigs.forEach(config => {
                 if (config.auto && config.tags.length === 0) autoPopulateTags(filterConfigs.indexOf(config));
                 const item = document.createElement('div');
-                item.style.background = "white"; item.style.border = "1px solid #e2e8f0"; item.style.borderRadius = "20px"; item.style.padding = "4px 12px"; item.style.display = "flex"; item.style.alignItems = "center"; item.style.gap = "8px"; item.style.whiteSpace = "nowrap"; item.style.boxShadow = "0 1px 2px rgba(0,0,0,0.05)";
-
+                item.style.background = "white"; item.style.border = "1px solid #e2e8f0"; item.style.borderRadius = "20px";
+                item.style.padding = "4px 12px"; item.style.display = "flex"; item.style.alignItems = "center"; item.style.gap = "8px"; item.style.whiteSpace = "nowrap";
                 let selectedVal = config.selectedValue || "";
                 let opts = `<option value="">Tất cả</option>` + config.tags.map(t => `<option value="${t}" ${t === selectedVal ? 'selected' : ''}>${t}</option>`).join('');
-
-                item.innerHTML = `<span style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;">${config.name}</span><select id="fs-${config.id}" style="border:none;background:transparent;font-weight:500;font-size:13px;max-width:140px;color:#334155;outline:none;" onchange="applyFilters(); saveAppState();">${opts}</select>`;
+                item.innerHTML = `<span style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;">${config.name}</span><select id="fs-${config.id}" style="border:none;background:transparent;font-weight:500;font-size:13px;max-width:140px;outline:none;" onchange="applyFilters(); saveAppState();">${opts}</select>`;
                 els.filterContainer.appendChild(item);
             });
             applyFilters();
@@ -1064,7 +903,6 @@
                 c.selectedValue = val;
                 return { colIndex: c.colIndex, val: val.toLowerCase().trim() };
             }).filter(f => f.val !== "");
-
             const rows = els.tableBody.querySelectorAll('tr');
             let visibleCount = 0;
             rows.forEach(tr => {
@@ -1072,8 +910,7 @@
                 if (searchVal && !tr.dataset.raw.includes(searchVal)) show = false;
                 if (show && activeFilters.length > 0) {
                     for (let f of activeFilters) {
-                        const rowIdx = tr.dataset.idx;
-                        const dataVal = rawData[rowIdx][f.colIndex];
+                        const dataVal = rawData[tr.dataset.idx][f.colIndex];
                         if (!String(dataVal).toLowerCase().includes(f.val)) { show = false; break; }
                     }
                 }
@@ -1091,107 +928,65 @@
             filterConfigs.forEach((c, idx) => {
                 const div = document.createElement('div');
                 div.className = `filter-creator-item ${c.auto ? 'auto-mode' : ''}`;
+                div.style.marginBottom = "10px"; div.style.padding = "10px"; div.style.background = "white"; div.style.borderRadius = "8px"; div.style.border = "1px solid #e2e8f0";
                 let colOpts = headers.map((h, i) => `<option value="${i}" ${i == c.colIndex ? 'selected' : ''}>${i + 1}: ${h}</option>`).join('');
                 div.innerHTML = `
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; gap:10px;">
-                    <input type="text" value="${c.name}" onchange="filterConfigs[${idx}].name=this.value" style="width:40%; padding:6px; border:1px solid #cbd5e1; border-radius:4px;" placeholder="Tên bộ lọc">
-                    <select onchange="filterConfigs[${idx}].colIndex=parseInt(this.value); if(filterConfigs[${idx}].auto) autoPopulateTags(${idx}); renderModalUI();" style="width:50%; padding:6px; border:1px solid #cbd5e1; border-radius:4px;">${colOpts}</select>
-                    <button style="color:#ef4444;border:none;background:none;cursor:pointer;font-weight:bold;font-size:16px;" onclick="filterConfigs.splice(${idx},1);renderModalUI();">✕</button>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; gap:8px;">
+                    <input type="text" value="${c.name}" onchange="filterConfigs[${idx}].name=this.value" style="width:40%; padding:4px; border:1px solid #cbd5e1; border-radius:4px;" placeholder="Tên bộ lọc">
+                    <select onchange="filterConfigs[${idx}].colIndex=parseInt(this.value); if(filterConfigs[${idx}].auto) autoPopulateTags(${idx}); renderModalUI();" style="width:50%; padding:4px; border:1px solid #cbd5e1; border-radius:4px;">${colOpts}</select>
+                    <button style="color:#ef4444;border:none;background:none;cursor:pointer;font-weight:bold;" onclick="filterConfigs.splice(${idx},1);renderModalUI();">✕</button>
                 </div>
-                <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#475569;margin-bottom:10px;">
-                    <input type="checkbox" ${c.auto ? 'checked' : ''} onchange="filterConfigs[${idx}].auto=this.checked; if(this.checked) autoPopulateTags(${idx}); renderModalUI();"> 🔄 Tự động (Auto fetch tags)
+                <label style="display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:8px;">
+                    <input type="checkbox" ${c.auto ? 'checked' : ''} onchange="filterConfigs[${idx}].auto=this.checked; if(this.checked) autoPopulateTags(${idx}); renderModalUI();"> Auto lấy tags
                 </label>
-                <div>
-                    ${c.auto ? `<div style="max-height:80px; overflow-y:auto; padding:5px; background:rgba(255,255,255,0.5); border-radius:4px;">${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
-                        : `<input type="text" placeholder="Nhập tag và nhấn Enter..." style="width:100%;margin-bottom:8px;padding:6px;border:1px solid #cbd5e1;border-radius:4px;" onkeydown="if(event.key==='Enter'){if(this.value){filterConfigs[${idx}].tags.push(this.value.trim()); this.value=''; renderModalUI();}}">
-                           <div>${c.tags.map((t, ti) => `<span class="tag">${t} <span onclick="filterConfigs[${idx}].tags.splice(${ti},1);renderModalUI();" style="cursor:pointer;color:red;margin-left:4px;font-weight:bold;">×</span></span>`).join('')}</div>`}
-                </div>`;
+                <div>${c.auto ? `<div style="max-height:60px; overflow-y:auto; font-size:11px;">${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : `<input type="text" placeholder="Nhập tag..." style="width:100%;margin-bottom:4px;padding:4px;" onkeydown="if(event.key==='Enter'){if(this.value){filterConfigs[${idx}].tags.push(this.value.trim()); this.value=''; renderModalUI();}}"><div>${c.tags.map((t, ti) => `<span class="tag">${t} <span onclick="filterConfigs[${idx}].tags.splice(${ti},1);renderModalUI();" style="color:red;cursor:pointer;">×</span></span>`).join('')}</div>`}</div>`;
                 els.modalContainer.appendChild(div);
             });
         }
         function addNewFilterGroupUI() { filterConfigs.push({ id: Date.now(), name: "Bộ lọc mới", colIndex: 0, tags: [], auto: false, selectedValue: "" }); renderModalUI(); }
         function saveFiltersAndApply() { closeFilterManager(); renderFilterBar(); saveAppState(); }
 
-        // --- IMPORT / EXPORT ---
+        // --- IMPORT/EXPORT/STATE ---
         function triggerImport() { document.getElementById('importConfigInput').click(); }
         function exportFilterConfig() {
             const ws = XLSX.utils.json_to_sheet(filterConfigs.map(c => ({ "Name": c.name, "ColIndex": c.colIndex, "Tags": c.tags.join(','), "Auto": c.auto ? 1 : 0 })));
             const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Config"); XLSX.writeFile(wb, "Config_ABBOOT_VKAM.xlsx");
         }
         document.getElementById('importConfigInput').addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            if (!file) return;
+            const file = e.target.files[0]; if (!file) return;
             const reader = new FileReader();
             reader.onload = function (ev) {
                 try {
                     const data = new Uint8Array(ev.target.result);
                     const wb = XLSX.read(data, { type: 'array' });
                     const importedData = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-                    if (!importedData || importedData.length === 0) return alert("File cấu hình trống!");
+                    if (!importedData.length) return alert("File lỗi!");
                     filterConfigs = importedData.map(d => ({
-                        id: Date.now() + Math.random(),
-                        name: d.Name || "Bộ lọc nhập",
-                        colIndex: parseInt(d.ColIndex || 0),
-                        tags: d.Tags ? String(d.Tags).split(',') : [],
-                        auto: !!d.Auto, selectedValue: ""
+                        id: Date.now() + Math.random(), name: d.Name || "Bộ lọc nhập", colIndex: parseInt(d.ColIndex || 0), tags: d.Tags ? String(d.Tags).split(',') : [], auto: !!d.Auto, selectedValue: ""
                     }));
-                    if (rawData.length > 0) filterConfigs.forEach((c, i) => { if (c.auto) autoPopulateTags(i); });
-                    renderFilterBar(); applyFilters(); saveAppState();
-                    alert(`✅ Đã nhập ${filterConfigs.length} cấu hình!`);
+                    renderFilterBar(); applyFilters(); saveAppState(); alert("Đã nhập cấu hình!");
                 } catch (err) { alert("Lỗi file!"); }
-            };
-            reader.readAsArrayBuffer(file);
-            this.value = '';
+            }; reader.readAsArrayBuffer(file); this.value = '';
         });
-
-        // --- STATE ---
         function debouncedSave() { clearTimeout(saveTimeout); saveTimeout = setTimeout(saveAppState, 1000); }
         function saveAppState() {
-            const state = {
-                rawData: rawData, headers: headers,
-                config: { headerRow: els.headerRow.value, selectedAddrCols: selectedAddrCols, customerAddress: els.customerAddrInput.value, globalSearch: els.globalSearch.value },
-                filters: filterConfigs,
-                layout: { colWidths: colWidths, hiddenColumns: Array.from(hiddenColumns) }
-            };
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-                els.saveStatus.style.opacity = 1;
-                setTimeout(() => els.saveStatus.style.opacity = 0, 2000);
-            } catch (e) {
-                const lightState = { ...state, rawData: [] };
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(lightState));
-            }
+            const state = { rawData, headers, config: { headerRow: els.headerRow.value, selectedAddrCols, customerAddress: els.customerAddrInput.value, globalSearch: els.globalSearch.value }, filters: filterConfigs, layout: { colWidths, hiddenColumns: Array.from(hiddenColumns) } };
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); els.saveStatus.style.opacity = 1; setTimeout(() => els.saveStatus.style.opacity = 0, 2000); } catch (e) { localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...state, rawData: [] })); }
         }
         function loadAppState() {
-            const json = localStorage.getItem(STORAGE_KEY);
-            if (!json) return;
+            const json = localStorage.getItem(STORAGE_KEY); if (!json) return;
             try {
                 const state = JSON.parse(json);
-                if (state.config) {
-                    els.headerRow.value = state.config.headerRow || 1;
-                    selectedAddrCols = state.config.selectedAddrCols || [];
-                    els.customerAddrInput.value = state.config.customerAddress || "";
-                    els.globalSearch.value = state.config.globalSearch || "";
-                }
-                if (state.layout?.colWidths) colWidths = state.layout.colWidths;
-                if (state.layout?.hiddenColumns) hiddenColumns = new Set(state.layout.hiddenColumns);
+                if (state.config) { els.headerRow.value = state.config.headerRow || 1; selectedAddrCols = state.config.selectedAddrCols || []; els.customerAddrInput.value = state.config.customerAddress || ""; els.globalSearch.value = state.config.globalSearch || ""; }
+                if (state.layout) { colWidths = state.layout.colWidths || {}; hiddenColumns = new Set(state.layout.hiddenColumns); }
                 if (state.filters) filterConfigs = state.filters;
                 if (state.rawData?.length > 0) {
-                    rawData = state.rawData;
-                    headers = state.headers || [];
-                    document.querySelector('.file-name-display').innerText = `📄 Dữ liệu cũ (Đã lưu)`;
-                    els.configControls.classList.remove('hidden');
-                    updateColumnCheckboxes();
-                    processInitialData(false);
+                    rawData = state.rawData; headers = state.headers || []; document.querySelector('.file-name-display').innerText = "📄 Dữ liệu cũ (Đã lưu)";
+                    els.configControls.classList.remove('hidden'); updateColumnCheckboxes(); processInitialData(false);
                 }
             } catch (e) { localStorage.removeItem(STORAGE_KEY); }
         }
-        function resetAllData() {
-            if (confirm("Xóa toàn bộ dữ liệu ABBOOT VKAM?")) {
-                localStorage.removeItem(STORAGE_KEY);
-                location.reload();
-            }
-        }
+        function resetAllData() { if (confirm("Xóa toàn bộ dữ liệu?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); } }
     </script>
 </body>
 
