@@ -4,20 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VKAM Multiple Maps V1.0</title>
+    <title>VKAM Smart Maps Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-body: #f1f5f9;
+            --primary: #3b82f6;
+            /* Xanh hiện đại */
+            --primary-hover: #2563eb;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg-body: #f8fafc;
             --bg-surface: #ffffff;
-            --border-color: #e2e8f0;
+            --border: #e2e8f0;
             --text-main: #1e293b;
-            --text-secondary: #64748b;
-            --header-height: 64px;
+            --text-light: #64748b;
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --radius: 8px;
+            --header-h: 60px;
         }
 
         * {
@@ -26,187 +33,183 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: var(--bg-body);
             color: var(--text-main);
             margin: 0;
-            padding: 0;
             height: 100vh;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
             font-size: 14px;
         }
 
         /* --- HEADER --- */
         .app-header {
-            height: var(--header-height);
+            height: var(--header-h);
             background: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 16px;
             box-shadow: var(--shadow-sm);
-            z-index: 50;
             flex-shrink: 0;
+            z-index: 50;
         }
 
         .brand-section {
             display: flex;
             align-items: center;
-            gap: 12px;
-            overflow: hidden;
+            gap: 10px;
         }
 
-        .app-title {
+        .app-logo {
+            font-size: 20px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: 800;
-            font-size: 18px;
-            color: var(--primary);
-            white-space: nowrap;
-            display: flex;
-            flex-direction: column;
-            line-height: 1.2;
         }
 
         .app-subtitle {
             font-size: 11px;
-            color: var(--text-secondary);
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            background: #eff6ff;
+            color: var(--primary);
+            border-radius: 4px;
+            font-weight: 600;
         }
 
         .header-actions {
             display: flex;
             gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 0;
-            -webkit-overflow-scrolling: touch;
         }
 
-        .header-actions::-webkit-scrollbar {
-            height: 0px;
-        }
-
-        /* --- TOOLBAR & CONFIG --- */
-        .config-toolbar {
+        /* --- CONTROL BAR --- */
+        .control-bar {
             background: var(--bg-surface);
             padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
             display: flex;
+            flex-wrap: wrap;
             gap: 12px;
             align-items: center;
-            flex-wrap: wrap;
             flex-shrink: 0;
         }
 
-        .file-upload-wrapper {
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        /* File Input Styling */
+        .file-input-wrapper {
             position: relative;
             overflow: hidden;
             display: inline-block;
         }
 
-        .btn-upload {
-            background: #eff6ff;
-            border: 1px dashed #60a5fa;
-            color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-        }
-
-        .btn-upload:hover {
-            background: #dbeafe;
-        }
-
-        .file-upload-wrapper input[type=file] {
+        .file-input-wrapper input[type=file] {
             font-size: 100px;
             position: absolute;
             left: 0;
             top: 0;
             opacity: 0;
             cursor: pointer;
+            width: 100%;
+            height: 100%;
         }
 
-        .config-group {
+        .btn-file-trigger {
+            background: white;
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 13px;
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: #f8fafc;
-            padding: 4px 8px;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
+            gap: 6px;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-sm);
         }
 
-        /* --- ROUTING AREA --- */
-        .routing-group {
+        .btn-file-trigger:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Routing Area */
+        .routing-wrapper {
+            flex: 1;
             display: flex;
             align-items: center;
             gap: 8px;
             background: #fff7ed;
-            border: 1px solid #fdba74;
+            border: 1px solid #fed7aa;
             padding: 6px 12px;
-            border-radius: 6px;
-            margin-left: auto;
+            border-radius: var(--radius);
+            min-width: 200px;
             transition: 0.3s;
         }
 
-        .routing-group input {
-            border: 1px solid transparent;
+        .routing-wrapper:focus-within {
+            border-color: #f97316;
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+        }
+
+        .routing-input {
+            border: none;
             background: transparent;
-            font-weight: 600;
-            color: #c2410c;
-            width: 200px;
+            width: 100%;
             outline: none;
+            color: #c2410c;
+            font-weight: 600;
+            font-size: 14px;
         }
 
-        .routing-group input:focus {
-            border-bottom: 1px solid #c2410c;
-        }
-
-        .routing-group input::placeholder {
+        .routing-input::placeholder {
             color: #fdba74;
-            font-weight: normal;
+            font-weight: 400;
         }
 
-        /* --- FILTER BAR --- */
+        /* --- FILTER & SEARCH --- */
         .filter-bar {
             background: var(--bg-surface);
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-bottom: 1px solid var(--border);
             display: flex;
-            align-items: center;
             gap: 12px;
+            align-items: center;
             flex-shrink: 0;
-            flex-wrap: wrap;
         }
 
-        .search-container {
-            flex-grow: 1;
-            min-width: 250px;
+        .search-box {
             position: relative;
+            flex: 1;
+            max-width: 400px;
         }
 
-        #globalSearch {
+        .search-box input {
             width: 100%;
-            padding: 10px 12px 10px 36px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: #f8fafc;
             transition: 0.2s;
-            background-color: #f8fafc;
+            font-size: 13px;
         }
 
-        #globalSearch:focus {
-            background-color: #fff;
+        .search-box input:focus {
+            background: white;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
             outline: none;
         }
 
@@ -216,134 +219,113 @@
             top: 50%;
             transform: translateY(-50%);
             color: #94a3b8;
-            pointer-events: none;
         }
 
         #dynamicFiltersContainer {
             display: flex;
             gap: 8px;
             overflow-x: auto;
-            padding-bottom: 4px;
-            max-width: 100%;
-            -webkit-overflow-scrolling: touch;
+            padding-bottom: 2px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        /* --- TABLE --- */
+        #dynamicFiltersContainer::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- MAIN TABLE --- */
         .main-content {
             flex: 1;
             overflow: hidden;
-            position: relative;
-            background: var(--bg-body);
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            padding: 8px;
         }
 
-        .table-wrapper {
+        .table-card {
+            background: white;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
             flex: 1;
             overflow: auto;
-            width: 100%;
-            background: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
+            position: relative;
         }
 
         table {
+            width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            width: 100%;
             table-layout: fixed;
-            font-size: 13px;
         }
 
         th {
-            background: #f1f5f9;
+            background: #f8fafc;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 10;
-            color: #475569;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 12px;
-            padding: 10px 12px;
-            border-bottom: 1px solid #cbd5e1;
-            border-right: 1px solid #e2e8f0;
             white-space: nowrap;
-        }
-
-        /* Column Remove Button Style */
-        .col-remove-btn {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 16px;
-            height: 16px;
-            margin-right: 6px;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 11px;
-            opacity: 0.4;
-            border-radius: 50%;
-            background-color: #fee2e2;
-            transition: all 0.2s;
-        }
-
-        th:hover .col-remove-btn {
-            opacity: 1;
-        }
-
-        .col-remove-btn:hover {
-            background-color: #ef4444;
-            color: white;
-            opacity: 1;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
+            /* Glass effect */
         }
 
         td {
-            padding: 8px 12px;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
             border-right: 1px solid #f1f5f9;
+            font-size: 13px;
+            color: var(--text-main);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 44px;
+            height: 48px;
             transition: background 0.1s;
         }
 
-        td:hover {
-            background-color: #f8fafc;
-            cursor: pointer;
+        tr:hover td {
+            background: #f8fafc;
         }
 
+        /* Expanded Cell Logic */
         td.expanded-cell {
             white-space: pre-wrap !important;
             word-break: break-word;
             overflow: visible !important;
             height: auto !important;
-            background: #eff6ff;
+            background: #eff6ff !important;
             position: relative;
-            z-index: 2;
+            z-index: 5;
+            box-shadow: var(--shadow-md);
         }
 
-        /* --- UI ELEMENTS --- */
+        /* --- BUTTONS & ELEMENTS --- */
         .btn {
-            padding: 8px 14px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
+            padding: 7px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
             white-space: nowrap;
-            transition: 0.2s;
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
 
         .btn-primary:hover {
@@ -353,173 +335,116 @@
 
         .btn-outline {
             background: white;
-            border: 1px solid #cbd5e1;
-            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-light);
         }
 
         .btn-outline:hover {
             border-color: var(--primary);
             color: var(--primary);
+            background: #f8fafc;
         }
 
-        .btn-reset {
+        .btn-danger {
             background: #fee2e2;
             color: #dc2626;
         }
 
+        .btn-danger:hover {
+            background: #fecaca;
+        }
+
         .badge-count {
-            background: #e2e8f0;
+            background: var(--text-main);
+            color: white;
             padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            color: #475569;
-            margin-left: 8px;
-            vertical-align: middle;
+            border-radius: 99px;
+            font-size: 10px;
+            margin-left: 5px;
         }
 
-        .link-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 11px;
-            text-decoration: none;
-            transition: 0.2s;
-            width: 100%;
-        }
-
-        .addr-dropdown-btn {
-            padding: 8px;
-            background: white;
-            border: 1px solid #cbd5e1;
+        /* Custom Select & Inputs */
+        input[type="number"],
+        select {
+            border: 1px solid var(--border);
             border-radius: 4px;
+            padding: 4px 8px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--primary);
+        }
+
+        /* Address Dropdown */
+        .addr-dropdown-btn {
+            padding: 6px 12px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
             font-size: 13px;
             cursor: pointer;
-            min-width: 180px;
+            min-width: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .addr-dropdown-content {
             position: absolute;
+            top: 100%;
+            left: 0;
             background: white;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--border);
             box-shadow: var(--shadow-md);
             z-index: 100;
             max-height: 250px;
             overflow-y: auto;
             width: 250px;
             padding: 5px;
-            border-radius: 6px;
+            border-radius: 8px;
             display: none;
+            margin-top: 4px;
         }
 
         .addr-dropdown-content.show {
             display: block;
         }
 
-        input,
-        select {
-            border-radius: 4px;
-            border: 1px solid #cbd5e1;
-            padding: 6px;
-            outline: none;
+        /* Link Badge */
+        .link-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 11px;
+            text-decoration: none;
+            transition: 0.2s;
+            width: 100%;
+            text-align: center;
         }
 
-        @media (max-width: 768px) {
-            :root {
-                --header-height: 56px;
-            }
-
-            .app-title span:last-child {
-                display: none;
-            }
-
-            .config-toolbar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-
-            .config-group {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .routing-group {
-                margin-left: 0;
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .routing-group input {
-                width: 100%;
-            }
-
-            .filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-
-            .search-container {
-                width: 100%;
-            }
-
-            .header-actions .btn {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-
-            .btn-upload {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .col-remove-btn {
-                opacity: 0.8;
-                width: 20px;
-                height: 20px;
-                font-size: 12px;
-                margin-right: 8px;
-            }
-
-            /* Bigger on mobile */
-            .modal-content {
-                width: 95%;
-                max-height: 90vh;
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .col-resizer {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 5px;
-            height: 100%;
-            cursor: col-resize;
-        }
-
+        /* --- MODAL --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(2px);
             z-index: 1000;
             display: none;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(2px);
         }
 
         .modal-overlay.open {
             display: flex;
+            animation: fadeIn 0.2s ease-out;
         }
 
         .modal-content {
@@ -531,13 +456,48 @@
             display: flex;
             flex-direction: column;
             box-shadow: var(--shadow-md);
+            animation: slideUp 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .tag {
+            background: #f1f5f9;
+            color: var(--text-main);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin: 2px;
+            display: inline-block;
+            border: 1px solid var(--border);
         }
 
         .filter-creator-item {
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 10px;
+            background: #fff;
         }
 
         .filter-creator-item.auto-mode {
@@ -545,15 +505,127 @@
             border-color: #86efac;
         }
 
-        .tag {
-            background: #eff6ff;
-            color: var(--primary);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-            margin: 2px;
-            display: inline-block;
-            border: 1px solid #bfdbfe;
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            :root {
+                --header-h: 56px;
+            }
+
+            .app-title span:last-child {
+                display: none;
+            }
+
+            .badge-count {
+                display: none;
+            }
+
+            /* Show in summary instead */
+
+            .header-actions .btn {
+                padding: 6px 8px;
+                font-size: 18px;
+                /* Icons only mode if needed */
+            }
+
+            .header-actions .btn span {
+                display: none;
+            }
+
+            /* Hide text on mobile buttons */
+            .header-actions .btn:after {
+                content: attr(title);
+                display: none;
+            }
+
+            /* Tooltip logic if needed */
+
+            .control-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .control-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .file-input-wrapper {
+                width: 100%;
+            }
+
+            .btn-file-trigger {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .routing-wrapper {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 10px;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            #dynamicFiltersContainer {
+                padding-bottom: 8px;
+            }
+
+            /* Adjust table for mobile */
+            th {
+                padding: 8px;
+                font-size: 10px;
+            }
+
+            td {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            /* Hide less important buttons text on mobile */
+            #btnRestoreCols {
+                font-size: 11px;
+            }
+        }
+
+        /* Utilities */
+        .hidden {
+            display: none !important;
+        }
+
+        .col-resizer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            cursor: col-resize;
+            background: transparent;
+        }
+
+        .col-resizer:hover {
+            background: var(--primary);
+            opacity: 0.5;
+        }
+
+        .col-remove-btn {
+            color: #ef4444;
+            cursor: pointer;
+            opacity: 0.3;
+            margin-right: 4px;
+            font-size: 10px;
+        }
+
+        th:hover .col-remove-btn {
+            opacity: 1;
         }
     </style>
 </head>
@@ -562,77 +634,92 @@
 
     <header class="app-header">
         <div class="brand-section">
-            <div class="app-title">
-                <span>Search multiple maps</span>
-                <span class="app-subtitle">ABBOOT VKAM</span>
+            <div class="app-logo">VKAM</div>
+            <div class="app-title" style="display:flex; flex-direction:column; line-height:1.1;">
+                <span style="font-weight:700; font-size:14px;">Multiple Maps</span>
+                <span class="app-subtitle">ABBOOT SYSTEM</span>
             </div>
-            <span id="rowCountBadge" class="badge-count">Chờ dữ liệu...</span>
+            <span id="rowCountBadge" class="badge-count" style="display:inline-block; margin-left:8px;">...</span>
             <span id="saveStatus"
-                style="font-size: 11px; color: #16a34a; opacity: 0; transition: opacity 0.5s; display:flex; align-items:center; gap:4px;">
-                💾 <span style="display:none; @media(min-width:600px){display:inline}">Đã lưu</span>
+                style="font-size: 12px; color: var(--success); opacity: 0; transition: opacity 0.5s; display:flex; align-items:center; gap:4px; margin-left: 8px;">
+                ✓ Đã lưu
             </span>
         </div>
         <div class="header-actions">
-            <button class="btn btn-reset" onclick="resetAllData()" title="Xóa toàn bộ">🗑️</button>
+            <button class="btn btn-danger" onclick="resetAllData()" title="Xóa dữ liệu">🗑️ <span>Xóa</span></button>
             <input type="file" id="importConfigInput" accept=".xlsx, .xls" class="hidden">
-            <button class="btn btn-outline" id="btnRestoreCols" onclick="resetHiddenColumns()" style="display:none;">👁️
-                Hiển thị lại cột</button>
-            <button class="btn btn-outline" onclick="triggerImport()">📥 Import</button>
-            <button class="btn btn-outline" onclick="exportFilterConfig()">📤 Export</button>
-            <button class="btn btn-primary" onclick="openFilterManager()">⚙️ Quản Lý</button>
+            <button class="btn btn-outline" id="btnRestoreCols" onclick="resetHiddenColumns()" style="display:none;"
+                title="Hiện lại cột">👁️</button>
+            <button class="btn btn-outline" onclick="triggerImport()" title="Import Cấu hình">📥
+                <span>Import</span></button>
+            <button class="btn btn-outline" onclick="exportFilterConfig()" title="Export Cấu hình">📤
+                <span>Export</span></button>
+            <button class="btn btn-primary" onclick="openFilterManager()" title="Quản lý bộ lọc">⚙️ <span>Cài
+                    đặt</span></button>
         </div>
     </header>
 
-    <div class="config-toolbar">
-        <div class="file-upload-wrapper">
-            <button class="btn-upload">📂 Chọn file Excel</button>
-            <input type="file" id="excelFile" accept=".xlsx, .xls" onchange="handleFileSelect(this)">
+    <div class="control-bar">
+        <div class="control-group" style="background:transparent; border:none; padding:0; flex-wrap:wrap; gap:8px;">
+            <div class="file-input-wrapper">
+                <button class="btn-file-trigger">📂 <span class="file-name-display">Chọn file Excel...</span></button>
+                <input type="file" id="excelFile" accept=".xlsx, .xls" onchange="handleFileSelect(this)">
+            </div>
         </div>
 
-        <div id="configControls" class="config-group hidden">
-            <label style="font-size:12px; color:#64748b; font-weight:600;">Tiêu đề dòng:</label>
-            <input type="number" id="headerRow" value="1" min="1" style="width: 50px;" onchange="saveAppState()">
+        <div id="configControls" class="control-group hidden" style="flex:1; justify-content:flex-start;">
+            <label style="font-size:12px; color:var(--text-light); font-weight:600; white-space:nowrap;">Dòng tiêu
+                đề:</label>
+            <input type="number" id="headerRow" value="1" min="1" style="width: 50px; text-align:center;"
+                onchange="saveAppState()">
 
             <div style="position:relative;">
-                <div class="addr-dropdown-btn" onclick="toggleAddrDropdown()">📍 Chọn cột địa chỉ...</div>
+                <div class="addr-dropdown-btn" onclick="toggleAddrDropdown()">
+                    <span>📍 Chọn cột địa chỉ...</span>
+                    <small>▼</small>
+                </div>
                 <div id="addrDropdownContent" class="addr-dropdown-content"></div>
             </div>
 
-            <button class="btn btn-primary" style="padding: 6px 12px;" onclick="processInitialData(true)">🚀 OK</button>
+            <button class="btn btn-primary" style="padding: 6px 12px;" onclick="processInitialData(true)">Áp
+                dụng</button>
         </div>
 
-        <div id="routingArea" class="routing-group hidden">
-            <span>🏠</span>
-            <input type="text" id="customerAddress" placeholder="Nhập địa chỉ của bạn..."
+        <div id="routingArea" class="routing-wrapper hidden">
+            <span style="font-size:16px;">🏠</span>
+            <input type="text" class="routing-input" id="customerAddress" placeholder="Nhập địa chỉ của bạn..."
                 onkeyup="updateMapLinks(); debouncedSave();">
             <button onclick="clearCustomerAddress()"
-                style="border:none; background:none; color:#ef4444; cursor:pointer;">✕</button>
+                style="border:none; background:none; color:var(--text-light); cursor:pointer; font-size:16px; padding:0 4px;">✕</button>
             <button id="btnOpenBatch" class="btn btn-primary hidden" onclick="openVisibleLinksLimit()"
-                style="font-size: 11px; padding: 4px 8px; background: #c2410c;">Mở 10 Map</button>
+                style="font-size: 11px; padding: 4px 10px; background: #ea580c; box-shadow: 0 2px 5px rgba(234,88,12,0.3);">
+                Mở 10 Map
+            </button>
         </div>
     </div>
 
     <div id="filterBar" class="filter-bar hidden">
-        <div class="search-container">
+        <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="globalSearch" placeholder="Tìm kiếm tên, số điện thoại, địa chỉ..."
+            <input type="text" id="globalSearch" placeholder="Tìm tên, SĐT, địa chỉ..."
                 onkeyup="applyFilters(); debouncedSave();">
         </div>
-        <div id="dynamicFiltersContainer"></div>
+        <div id="dynamicFiltersContainer">
+        </div>
     </div>
 
     <main class="main-content">
-        <div class="table-wrapper" id="tableWrapper">
+        <div class="table-card" id="tableWrapper">
             <table id="dataTable">
                 <thead id="tableHead"></thead>
                 <tbody id="tableBody">
                     <tr>
-                        <td colspan="10" style="text-align:center; padding: 50px;">
+                        <td colspan="10" style="text-align:center; padding: 60px 20px;">
                             <div
-                                style="color: #94a3b8; display:flex; flex-direction:column; align-items:center; gap:10px;">
-                                <span style="font-size: 40px;">📁</span>
-                                <span>Vui lòng chọn file Excel để bắt đầu</span>
-                                <small style="color:#cbd5e1">ABBOOT VKAM SYSTEM</small>
+                                style="color: var(--text-light); display:flex; flex-direction:column; align-items:center; gap:15px;">
+                                <div style="font-size: 50px; opacity:0.3;">📁</div>
+                                <div style="font-weight:500;">Chưa có dữ liệu</div>
+                                <div style="font-size:13px;">Vui lòng chọn file Excel để bắt đầu</div>
                             </div>
                         </td>
                     </tr>
@@ -644,15 +731,20 @@
     <div id="filterModal" class="modal-overlay">
         <div class="modal-content">
             <div
-                style="padding: 15px; border-bottom: 1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; background:#f8fafc;">
-                <h4 style="margin:0; color:var(--text-main);">⚙️ Cấu Hình Bộ Lọc</h4>
+                style="padding: 15px 20px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:#f8fafc; border-radius:12px 12px 0 0;">
+                <h3 style="margin:0; font-size:16px; color:var(--text-main);">⚙️ Quản Lý Bộ Lọc</h3>
                 <button onclick="closeFilterManager()"
-                    style="background:none; border:none; font-size:18px; cursor:pointer; color:#64748b;">✕</button>
+                    style="background:none; border:none; font-size:20px; cursor:pointer; color:var(--text-light);">✕</button>
             </div>
-            <div style="padding: 15px; overflow-y: auto; flex: 1;" id="filterGroupsContainer"></div>
-            <div style="padding: 15px; border-top: 1px solid #e2e8f0; display:flex; gap:10px; background:#f8fafc;">
-                <button class="btn btn-outline" style="flex:1;" onclick="addNewFilterGroupUI()">+ Thêm nhóm</button>
-                <button class="btn btn-primary" style="flex:1;" onclick="saveFiltersAndApply()">Lưu & Áp Dụng</button>
+
+            <div style="padding: 20px; overflow-y: auto; flex: 1; background:#f1f5f9;" id="filterGroupsContainer"></div>
+
+            <div
+                style="padding: 15px 20px; border-top: 1px solid var(--border); display:flex; gap:12px; background:white; border-radius:0 0 12px 12px;">
+                <button class="btn btn-outline" style="flex:1; justify-content:center;"
+                    onclick="addNewFilterGroupUI()">+ Thêm nhóm</button>
+                <button class="btn btn-primary" style="flex:1; justify-content:center;"
+                    onclick="saveFiltersAndApply()">Lưu & Áp Dụng</button>
             </div>
         </div>
     </div>
@@ -666,7 +758,7 @@
         let filterConfigs = [];
         let selectedAddrCols = [];
         let colWidths = {};
-        let hiddenColumns = new Set(); // Store indices of hidden columns
+        let hiddenColumns = new Set();
         let saveTimeout;
 
         const els = {
@@ -683,7 +775,7 @@
             modalContainer: document.getElementById('filterGroupsContainer'),
             badge: document.getElementById('rowCountBadge'),
             addrDropdown: document.getElementById('addrDropdownContent'),
-            addrBtn: document.querySelector('.addr-dropdown-btn'),
+            addrBtn: document.querySelector('.addr-dropdown-btn span'),
             table: document.getElementById('dataTable'),
             saveStatus: document.getElementById('saveStatus'),
             globalSearch: document.getElementById('globalSearch'),
@@ -696,14 +788,16 @@
         function handleFileSelect(input) {
             const file = input.files[0];
             if (!file) return;
-            document.querySelector('.btn-upload').innerHTML = `📄 ${file.name.substring(0, 15)}...`;
+            // Update UI for filename
+            document.querySelector('.file-name-display').innerText = file.name;
+
             const reader = new FileReader();
             reader.onload = function (e) {
                 const data = new Uint8Array(e.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
                 rawData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
                 colWidths = {};
-                hiddenColumns.clear(); // Reset hidden columns on new file
+                hiddenColumns.clear();
                 if (rawData.length > 0) {
                     els.configControls.classList.remove('hidden');
                     updateColumnCheckboxes();
@@ -723,7 +817,7 @@
             headers.forEach((h, i) => {
                 if (!h) return;
                 const div = document.createElement('div');
-                div.style.padding = "6px";
+                div.style.padding = "8px";
                 div.style.borderBottom = "1px solid #f1f5f9";
 
                 let isChecked = false;
@@ -731,7 +825,7 @@
                 else isChecked = ['địa chỉ', 'phường', 'xã', 'quận', 'huyện', 'thành phố', 'tỉnh'].some(keyword => String(h).toLowerCase().includes(keyword));
                 if (isChecked && !selectedAddrCols.includes(i)) selectedAddrCols.push(i);
 
-                div.innerHTML = `<label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="${i}" ${isChecked ? 'checked' : ''} onchange="updateSelectedAddrCols()"> <span style="font-size:12px;">${i + 1}. ${h}</span></label>`;
+                div.innerHTML = `<label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" value="${i}" ${isChecked ? 'checked' : ''} onchange="updateSelectedAddrCols()"> <span style="font-size:13px;">${i + 1}. ${h}</span></label>`;
                 els.addrDropdown.appendChild(div);
             });
             updateAddrBtnText();
@@ -750,9 +844,17 @@
             saveAppState();
         }
         function updateAddrBtnText() {
+            const btn = document.querySelector('.addr-dropdown-btn');
             els.addrBtn.innerText = selectedAddrCols.length > 0 ? `Đã chọn ${selectedAddrCols.length} cột` : "📍 Chọn cột địa chỉ...";
-            els.addrBtn.style.color = selectedAddrCols.length > 0 ? "var(--primary)" : "#64748b";
-            els.addrBtn.style.fontWeight = selectedAddrCols.length > 0 ? "bold" : "normal";
+            if (selectedAddrCols.length > 0) {
+                btn.style.borderColor = "var(--primary)";
+                btn.style.color = "var(--primary)";
+                btn.style.background = "#eff6ff";
+            } else {
+                btn.style.borderColor = "#e2e8f0";
+                btn.style.color = "inherit";
+                btn.style.background = "white";
+            }
         }
 
         // --- RENDER & RESIZE & HIDE COLS ---
@@ -770,21 +872,17 @@
             if (selectedAddrCols.length === 0) return alert("Vui lòng chọn ít nhất 1 cột địa chỉ!");
             const hIndex = parseInt(els.headerRow.value) - 1;
 
-            // Show/Hide Restore Button
             els.btnRestoreCols.style.display = hiddenColumns.size > 0 ? 'inline-flex' : 'none';
 
             els.tableHead.innerHTML = '';
             const trHead = document.createElement('tr');
-            // STT Column (Fixed)
             trHead.appendChild(createResizableTh('STT', colWidths['stt'] || '50px', 'stt', false));
 
-            // Data Columns
             headers.forEach((h, i) => {
-                if (hiddenColumns.has(i)) return; // SKIP HIDDEN COLUMNS
+                if (hiddenColumns.has(i)) return;
                 trHead.appendChild(createResizableTh(h, colWidths[i] || '150px', i, true));
             });
 
-            // Action Column (Fixed)
             trHead.appendChild(createResizableTh('Chỉ Đường', colWidths['action'] || '110px', 'action', false));
             els.tableHead.appendChild(trHead);
 
@@ -799,9 +897,8 @@
                 tr.dataset.idx = i;
                 tr.dataset.raw = JSON.stringify(row).toLowerCase();
 
-                let tdHTML = `<td>${count}</td>`;
+                let tdHTML = `<td style="text-align:center;color:#64748b;font-size:11px;">${count}</td>`;
 
-                // Only render visible columns
                 headers.forEach((h, colIdx) => {
                     if (hiddenColumns.has(colIdx)) return;
                     tdHTML += `<td>${row[colIdx] !== undefined ? row[colIdx] : ''}</td>`;
@@ -815,7 +912,7 @@
 
             els.filterBar.classList.remove('hidden');
             els.routingArea.classList.remove('hidden');
-            els.badge.innerText = `${count} dòng`;
+            els.badge.innerText = `${count}`;
 
             if (filterConfigs.length === 0) {
                 let districtColIdx = headers.findIndex(h => h && (h.toLowerCase().includes('quận') || h.toLowerCase().includes('huyện')));
@@ -921,6 +1018,7 @@
                 }
             });
         }
+
         function openVisibleLinksLimit() {
             const visibleRows = Array.from(els.tableBody.querySelectorAll('tr')).filter(tr => tr.style.display !== 'none');
             const validLinks = visibleRows.map(tr => tr.querySelector('.link-badge')?.href).filter(h => h && h.startsWith('http'));
@@ -949,12 +1047,12 @@
             filterConfigs.forEach(config => {
                 if (config.auto && config.tags.length === 0) autoPopulateTags(filterConfigs.indexOf(config));
                 const item = document.createElement('div');
-                item.style.background = "white"; item.style.border = "1px solid #cbd5e1"; item.style.borderRadius = "6px"; item.style.padding = "4px 8px"; item.style.display = "flex"; item.style.alignItems = "center"; item.style.gap = "5px"; item.style.whiteSpace = "nowrap";
+                item.style.background = "white"; item.style.border = "1px solid #e2e8f0"; item.style.borderRadius = "20px"; item.style.padding = "4px 12px"; item.style.display = "flex"; item.style.alignItems = "center"; item.style.gap = "8px"; item.style.whiteSpace = "nowrap"; item.style.boxShadow = "0 1px 2px rgba(0,0,0,0.05)";
 
                 let selectedVal = config.selectedValue || "";
                 let opts = `<option value="">Tất cả</option>` + config.tags.map(t => `<option value="${t}" ${t === selectedVal ? 'selected' : ''}>${t}</option>`).join('');
 
-                item.innerHTML = `<span style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;">${config.name}:</span><select id="fs-${config.id}" style="border:none;background:transparent;font-weight:600;font-size:13px;max-width:150px;" onchange="applyFilters(); saveAppState();">${opts}</select>`;
+                item.innerHTML = `<span style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;">${config.name}</span><select id="fs-${config.id}" style="border:none;background:transparent;font-weight:500;font-size:13px;max-width:140px;color:#334155;outline:none;" onchange="applyFilters(); saveAppState();">${opts}</select>`;
                 els.filterContainer.appendChild(item);
             });
             applyFilters();
@@ -973,11 +1071,7 @@
                 let show = true;
                 if (searchVal && !tr.dataset.raw.includes(searchVal)) show = false;
                 if (show && activeFilters.length > 0) {
-                    const cells = tr.children;
                     for (let f of activeFilters) {
-                        // IMPORTANT: Need to account for HIDDEN columns when checking filters? 
-                        // Actually filters operate on DATA index (colIndex). The DOM cells might be shifted if columns are hidden.
-                        // Correct approach: Use rawData to check filter condition, NOT dom text content.
                         const rowIdx = tr.dataset.idx;
                         const dataVal = rawData[rowIdx][f.colIndex];
                         if (!String(dataVal).toLowerCase().includes(f.val)) { show = false; break; }
@@ -986,7 +1080,7 @@
                 tr.style.display = show ? '' : 'none';
                 if (show) visibleCount++;
             });
-            els.badge.innerText = `${visibleCount} dòng`;
+            els.badge.innerText = `${visibleCount}`;
         }
 
         // --- MODAL ---
@@ -1000,17 +1094,17 @@
                 let colOpts = headers.map((h, i) => `<option value="${i}" ${i == c.colIndex ? 'selected' : ''}>${i + 1}: ${h}</option>`).join('');
                 div.innerHTML = `
                 <div style="display:flex; justify-content:space-between; margin-bottom:10px; gap:10px;">
-                    <input type="text" value="${c.name}" onchange="filterConfigs[${idx}].name=this.value" style="width:40%" placeholder="Tên bộ lọc">
-                    <select onchange="filterConfigs[${idx}].colIndex=parseInt(this.value); if(filterConfigs[${idx}].auto) autoPopulateTags(${idx}); renderModalUI();" style="width:50%">${colOpts}</select>
-                    <button style="color:#ef4444;border:none;background:none;cursor:pointer;font-weight:bold;" onclick="filterConfigs.splice(${idx},1);renderModalUI();">✕</button>
+                    <input type="text" value="${c.name}" onchange="filterConfigs[${idx}].name=this.value" style="width:40%; padding:6px; border:1px solid #cbd5e1; border-radius:4px;" placeholder="Tên bộ lọc">
+                    <select onchange="filterConfigs[${idx}].colIndex=parseInt(this.value); if(filterConfigs[${idx}].auto) autoPopulateTags(${idx}); renderModalUI();" style="width:50%; padding:6px; border:1px solid #cbd5e1; border-radius:4px;">${colOpts}</select>
+                    <button style="color:#ef4444;border:none;background:none;cursor:pointer;font-weight:bold;font-size:16px;" onclick="filterConfigs.splice(${idx},1);renderModalUI();">✕</button>
                 </div>
-                <label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#475569;margin-bottom:8px;">
-                    <input type="checkbox" ${c.auto ? 'checked' : ''} onchange="filterConfigs[${idx}].auto=this.checked; if(this.checked) autoPopulateTags(${idx}); renderModalUI();"> 🔄 Tự động lấy danh sách (Auto)
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#475569;margin-bottom:10px;">
+                    <input type="checkbox" ${c.auto ? 'checked' : ''} onchange="filterConfigs[${idx}].auto=this.checked; if(this.checked) autoPopulateTags(${idx}); renderModalUI();"> 🔄 Tự động (Auto fetch tags)
                 </label>
                 <div>
-                    ${c.auto ? `<div style="max-height:60px; overflow-y:auto; opacity:0.8;">${c.tags.map(t => `<span class="tag auto-tag">${t}</span>`).join('')}</div>`
-                        : `<input type="text" placeholder="Nhập tag và nhấn Enter..." style="width:100%;margin-bottom:5px;" onkeydown="if(event.key==='Enter'){if(this.value){filterConfigs[${idx}].tags.push(this.value.trim()); this.value=''; renderModalUI();}}">
-                           <div>${c.tags.map((t, ti) => `<span class="tag">${t} <span onclick="filterConfigs[${idx}].tags.splice(${ti},1);renderModalUI();" style="cursor:pointer;color:red;margin-left:4px;">×</span></span>`).join('')}</div>`}
+                    ${c.auto ? `<div style="max-height:80px; overflow-y:auto; padding:5px; background:rgba(255,255,255,0.5); border-radius:4px;">${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+                        : `<input type="text" placeholder="Nhập tag và nhấn Enter..." style="width:100%;margin-bottom:8px;padding:6px;border:1px solid #cbd5e1;border-radius:4px;" onkeydown="if(event.key==='Enter'){if(this.value){filterConfigs[${idx}].tags.push(this.value.trim()); this.value=''; renderModalUI();}}">
+                           <div>${c.tags.map((t, ti) => `<span class="tag">${t} <span onclick="filterConfigs[${idx}].tags.splice(${ti},1);renderModalUI();" style="cursor:pointer;color:red;margin-left:4px;font-weight:bold;">×</span></span>`).join('')}</div>`}
                 </div>`;
                 els.modalContainer.appendChild(div);
             });
@@ -1085,7 +1179,7 @@
                 if (state.rawData?.length > 0) {
                     rawData = state.rawData;
                     headers = state.headers || [];
-                    document.querySelector('.btn-upload').innerHTML = `📄 Dữ liệu cũ`;
+                    document.querySelector('.file-name-display').innerText = `📄 Dữ liệu cũ (Đã lưu)`;
                     els.configControls.classList.remove('hidden');
                     updateColumnCheckboxes();
                     processInitialData(false);
